@@ -6,7 +6,7 @@ let package = Package(
     name: "IJSVG",
     products: [.library(name: "IJSVG", targets: ["IJSVG"])],
     dependencies: [
-        .package(url: "https://github.com/Archery-Inc/TouchXML.git", from: "0.3.0-alpha")
+        .package(url: "https://github.com/Archery-Inc/TouchXML.git", branch: "mutability")
     ],
     targets: [
         .target(

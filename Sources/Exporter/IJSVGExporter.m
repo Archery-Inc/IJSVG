@@ -6,6 +6,7 @@
 //  Copyright © 2017 Curtis Hard. All rights reserved.
 //
 
+#if __has_include(<AppKit/AppKit.h>)
 #import "IJSVG.h"
 #import "IJSVGExporter.h"
 #import "IJSVGExporterPathInstruction.h"
@@ -22,6 +23,7 @@
 #import "IJSVGTransformLayer.h"
 #import "IJSVGParser.h"
 #import "IJSVGThreadManager.h"
+#import "IJSVGXEntities.h"
 
 @implementation IJSVGExporter
 
@@ -1373,15 +1375,15 @@ NSString* IJSVGHash(NSString* key)
     imageElement.name = @"image";
     
     // we need to transform this into its required aspect ratio
-    XImage* XImage = image.image;
+    XImage* xImage = image.image;
     CGFloat ratio = 0.f;
     CGImageRef cgImage = NULL;
     
     const CGRect bounds = image.bounds;
     const CGFloat imageWidth = bounds.size.width;
     const CGFloat imageHeight = bounds.size.height;
-    const CGFloat maxWidth = XImage.size.width;
-    const CGFloat maxHeight = XImage.size.height;
+    const CGFloat maxWidth = xImage.size.width;
+    const CGFloat maxHeight = xImage.size.height;
     
     // work out the ratio
     if(imageWidth > imageHeight) {
@@ -1393,7 +1395,7 @@ NSString* IJSVGHash(NSString* key)
     if(ratio != 1.f) {
         CGRect newImageRect = CGRectMake(0.f, 0.f, imageWidth*ratio,
                                          imageHeight*ratio);
-        XImage* actualImage = [IJSVGUtils resizeImage:XImage
+        XImage* actualImage = [IJSVGUtils resizeImage:xImage
                                                toSize:newImageRect.size];
         cgImage = [actualImage CGImageForProposedRect:&newImageRect
                                               context:NULL
@@ -2364,3 +2366,4 @@ void IJSVGEnumerateCGPathElements(CGPathRef path, IJSVGPathElementEnumerationBlo
 }
 
 @end
+#endif

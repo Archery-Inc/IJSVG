@@ -79,6 +79,7 @@
 - (CGSize)sizeByMaintainingAspectRatioWithSize:(CGSize)aSize;
 - (NSString*)identifier;
 - (NSSet<IJSVG*>*)directDescendSVGs;
+#if __has_include(<AppKit/AppKit.h>)
 - (IJSVGExporter*)exporterWithSize:(CGSize)size
                            options:(IJSVGExporterOptions)options
               floatingPointOptions:(IJSVGFloatingPointOptions)floatingPointOptions;
@@ -90,6 +91,7 @@
 - (NSString*)SVGStringWithOptions:(IJSVGExporterOptions)options;
 - (NSString*)SVGStringWithOptions:(IJSVGExporterOptions)options
              floatingPointOptions:(IJSVGFloatingPointOptions)floatingPointOptions;
+#endif
 
 + (id)SVGNamed:(NSString*)string;
 

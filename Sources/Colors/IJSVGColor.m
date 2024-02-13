@@ -11,6 +11,7 @@
 #import "IJSVGStringAdditions.h"
 #import "IJSVGParsing.h"
 #import "IJSVGParser.h"
+#import "UIColor+macOS.h"
 
 NSString* const IJSVGColorCurrentColorName = @"currentColor";
 

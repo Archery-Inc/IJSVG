@@ -173,7 +173,7 @@ extern NSString* const IJSVGColorCurrentColorName;
 CGFloat* IJSVGColorCSSHSLToHSB(CGFloat hue, CGFloat saturation, CGFloat lightness);
 
 + (XColor*)computeColorSpace:(XColor*)color;
-+ (XColorSpaceRef)defaultColorSpace;
++ (XColorSpace*)defaultColorSpace;
 + (BOOL)isColor:(NSString*)string;
 + (NSString*)colorStringFromColor:(XColor*)color
                           options:(IJSVGColorStringOptions)options;

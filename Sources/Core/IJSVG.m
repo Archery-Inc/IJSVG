@@ -10,6 +10,8 @@
 #import "IJSVGExporter.h"
 #import "IJSVGTransaction.h"
 #import "IJSVGThreadManager.h"
+#import "IJSVGXEntities.h"
+#import "UIScreen+macOS.h"
 
 @implementation IJSVG
 
@@ -272,8 +274,8 @@
     self.renderQuality = kIJSVGRenderQualityFullResolution;
     self.defaultSize = CGSizeMake(200.f, 200.f);
     self.renderingBackingScaleHelper = ^CGFloat {
-        if(NSScreen.mainScreen != nil) {
-            return NSScreen.mainScreen.backingScaleFactor;
+        if(XScreen.mainScreen != nil) {
+            return XScreen.mainScreen.backingScaleFactor;
         }
         return 1.f;
     };
@@ -342,6 +344,7 @@
     return svgs;
 }
 
+#if __has_include(<AppKit/AppKit.h>)
 - (IJSVGExporter*)exporterWithSize:(CGSize)size
                            options:(IJSVGExporterOptions)options
               floatingPointOptions:(IJSVGFloatingPointOptions)floatingPointOptions
@@ -385,6 +388,7 @@
                           options:options
              floatingPointOptions:floatingPointOptions].SVGString;
 }
+#endif
 
 - (XImage*)imageWithSize:(CGSize)aSize
 {
@@ -501,7 +505,7 @@
 - (NSData*)PDFData:(NSError**)error
 {
     return [self
-        PDFDataWithRect:(CGRect) { .origin = NSZeroPoint, .size = _viewBox.size }
+        PDFDataWithRect:(CGRect) { .origin = XPointZero, .size = _viewBox.size }
                   error:error];
 }
 
@@ -545,7 +549,7 @@
     return data;
 }
 
-- (void)prepForDrawingInView:(NSView*)view
+- (void)prepForDrawingInView:(XView*)view
 {
     // kill the render
     if(view == nil) {
@@ -557,7 +561,7 @@
     [self rootLayer];
 
     // set the scale
-    __weak NSView* weakView = view;
+    __weak XView* weakView = view;
     self.renderingBackingScaleHelper = ^CGFloat {
         return weakView.window.screen.backingScaleFactor;
     };
@@ -575,7 +579,7 @@
                size:(CGSize)aSize
               error:(NSError**)error
 {
-    return [self drawInRect:NSMakeRect(point.x, point.y,
+    return [self drawInRect:XRectMake(point.x, point.y,
                                        aSize.width, aSize.height)
                       error:error];
 }
@@ -691,6 +695,7 @@
 
 #pragma mark NSPasteboard
 
+#if __has_include(<AppKit/AppKit.h>)
 - (NSArray*)writableTypesForPasteboard:(NSPasteboard*)pasteboard
 {
     return @[ NSPasteboardTypePDF ];
@@ -703,6 +708,7 @@
     }
     return nil;
 }
+#endif
 
 #pragma mark matching
 

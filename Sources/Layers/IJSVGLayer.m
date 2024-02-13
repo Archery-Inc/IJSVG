@@ -23,8 +23,8 @@ CGRect IJSVGLayerGetBoundingBoxBounds(CALayer<IJSVGDrawableLayer>* drawableLayer
 
 NSMapTable<NSNumber*, CALayer<IJSVGDrawableLayer>*>* IJSVGLayerDefaultUsageMapTable(void)
 {
-    return [[NSMapTable alloc] initWithKeyOptions:XPointerFunctionsStrongMemory
-                                     valueOptions:XPointerFunctionsWeakMemory
+    return [[NSMapTable alloc] initWithKeyOptions:NSPointerFunctionsStrongMemory
+                                     valueOptions:NSPointerFunctionsWeakMemory
                                          capacity:3];
 }
 

@@ -39,7 +39,7 @@
     }
 }
 
-+ (NSArray<XImageRep*>*)imageRepsWithData:(NSData*)data
++ (NSArray<NSImageRep*>*)imageRepsWithData:(NSData*)data
 {
     IJSVGImageRep* instance = [self imageRepWithData:data];
     if(instance == nil) {

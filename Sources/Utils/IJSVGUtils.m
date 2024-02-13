@@ -13,6 +13,7 @@
 #import "IJSVGParsing.h"
 #import "IJSVGParser.h"
 #import "IJSVGXEntities.h"
+#import "UIImage+macOS.h"
 
 @implementation IJSVGUtils
 
@@ -695,8 +696,8 @@ CGFloat IJSVGDegreesToRadians(CGFloat degrees)
 {
     XImage* image = [[XImage alloc] initWithSize:size];
     [image lockFocus];
-    [anImage drawInRect:NSMakeRect(0.f, 0.f, size.width, size.height)
-               fromRect:NSMakeRect(0.f, 0.f, anImage.size.width, anImage.size.height)
+    [anImage drawInRect:XRectMake(0.f, 0.f, size.width, size.height)
+               fromRect:XRectMake(0.f, 0.f, anImage.size.width, anImage.size.height)
               operation:NSCompositingOperationCopy
                fraction:1.f];
     [image unlockFocus];

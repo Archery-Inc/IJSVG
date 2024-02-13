@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 Curtis Hard. All rights reserved.
 //
 
-@import TouchXML;
-
 #import "IJSVGGradient.h"
+#import "IJSVGXEntities.h"
 #import <Foundation/Foundation.h>
 
 @interface IJSVGLinearGradient : IJSVGGradient
