@@ -44,9 +44,7 @@ IJSVGFloatingPointOptions IJSVGFloatingPointOptionsMake(BOOL round, int precisio
 #endif
 
 NSString* IJSVGCompressFloatParameterArray(NSArray<NSString*>* stringToCompress);
-#if __has_include(<AppKit/AppKit.h>)
 NSString* IJSVGShortFloatStringWithOptions(CGFloat f, IJSVGFloatingPointOptions options);
-#endif
 NSString* IJSVGShortenFloatString(NSString* string);
 NSString* IJSVGPointToCommandString(CGPoint point);
 NSString* IJSVGShortFloatString(CGFloat f);

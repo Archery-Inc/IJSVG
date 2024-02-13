@@ -65,6 +65,7 @@
 		59D6B1A5284F67FC0058DE6B /* gump-bench.svg in Resources */ = {isa = PBXBuildFile; fileRef = 59D6B1A4284F67FC0058DE6B /* gump-bench.svg */; };
 		59D6B1A7284F698F0058DE6B /* sh.svg in Resources */ = {isa = PBXBuildFile; fileRef = 59D6B1A6284F698F0058DE6B /* sh.svg */; };
 		59F799E219B880CE00096CB7 /* htc_one.svg in Resources */ = {isa = PBXBuildFile; fileRef = 59F799E119B880CE00096CB7 /* htc_one.svg */; };
+		7B25CAC12B7C2E6500F4518A /* SVGView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B25CAC02B7C2E6500F4518A /* SVGView.swift */; };
 		7B6C45A12B7C21F9004F6D6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C45A02B7C21F9004F6D6F /* AppDelegate.swift */; };
 		7B6C45A32B7C21F9004F6D6F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C45A22B7C21F9004F6D6F /* SceneDelegate.swift */; };
 		7B6C45A52B7C21F9004F6D6F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C45A42B7C21F9004F6D6F /* ViewController.swift */; };
@@ -205,6 +206,7 @@
 		59D6B1A4284F67FC0058DE6B /* gump-bench.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gump-bench.svg"; sourceTree = "<group>"; };
 		59D6B1A6284F698F0058DE6B /* sh.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sh.svg; sourceTree = "<group>"; };
 		59F799E119B880CE00096CB7 /* htc_one.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = htc_one.svg; sourceTree = "<group>"; };
+		7B25CAC02B7C2E6500F4518A /* SVGView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGView.swift; sourceTree = "<group>"; };
 		7B6C459E2B7C21F9004F6D6F /* IJSVGExample for iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "IJSVGExample for iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7B6C45A02B7C21F9004F6D6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7B6C45A22B7C21F9004F6D6F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				7B6C45A02B7C21F9004F6D6F /* AppDelegate.swift */,
 				7B6C45A22B7C21F9004F6D6F /* SceneDelegate.swift */,
 				7B6C45A42B7C21F9004F6D6F /* ViewController.swift */,
+				7B25CAC02B7C2E6500F4518A /* SVGView.swift */,
 				7B6C45A62B7C21F9004F6D6F /* Main.storyboard */,
 				7B6C45A92B7C21FA004F6D6F /* Assets.xcassets */,
 				7B6C45AB2B7C21FA004F6D6F /* LaunchScreen.storyboard */,
@@ -590,6 +593,7 @@
 			files = (
 				7B6C45A12B7C21F9004F6D6F /* AppDelegate.swift in Sources */,
 				7B6C45A32B7C21F9004F6D6F /* SceneDelegate.swift in Sources */,
+				7B25CAC12B7C2E6500F4518A /* SVGView.swift in Sources */,
 				7B6C45A52B7C21F9004F6D6F /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

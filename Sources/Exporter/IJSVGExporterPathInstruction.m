@@ -6,13 +6,13 @@
 //  Copyright © 2017 Curtis Hard. All rights reserved.
 //
 
-#if __has_include(<AppKit/AppKit.h>)
 
 #import "IJSVGExporter.h"
 #import "IJSVGExporterPathInstruction.h"
 #import "IJSVGUtils.h"
 #import <math.h>
 
+#if __has_include(<AppKit/AppKit.h>)
 @implementation IJSVGExporterPathInstructionCommand
 @end
 
@@ -178,6 +178,8 @@
     return [self pathStringWithInstructionSet:pathInstructions
                          floatingPointOptions:floatingPointOptions];
 }
+#endif
+
 
 CGFloat IJSVGExporterPathFloatToFixed(CGFloat number, int precision)
 {
@@ -200,6 +202,7 @@ void IJSVGExporterPathInstructionRoundData(CGFloat* data, NSInteger length,
     }
 }
 
+#if __has_include(<AppKit/AppKit.h>)
 + (void)convertInstructionsToRoundRelativeCoordinates:(NSArray<IJSVGExporterPathInstruction*>*)instructions
                                  floatingPointOptions:(IJSVGFloatingPointOptions)floatingPointOptions
 {

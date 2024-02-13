@@ -1,1 +1,0 @@
-../Core/IJSVGUmbrella.h

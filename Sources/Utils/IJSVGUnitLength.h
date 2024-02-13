@@ -54,6 +54,8 @@ typedef NS_ENUM(NSInteger, IJSVGUnitType) {
 - (CGFloat)valueAsPercentage;
 - (CGFloat)computeValue:(CGFloat)anotherValue;
 - (NSString*)stringValue;
+#if __has_include(<AppKit/AppKit.h>)
 - (NSString*)stringValueWithFloatingPointOptions:(IJSVGFloatingPointOptions)options;
+#endif
 
 @end
