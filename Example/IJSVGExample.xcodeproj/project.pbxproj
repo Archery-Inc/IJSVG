@@ -42,7 +42,6 @@
 		5956658019B62F4600D805FF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5956657F19B62F4600D805FF /* AppDelegate.m */; };
 		5956658219B62F4600D805FF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5956658119B62F4600D805FF /* Images.xcassets */; };
 		5956658519B62F4600D805FF /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5956658319B62F4600D805FF /* MainMenu.xib */; };
-		5956659119B62F4700D805FF /* IJSVGExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5956659019B62F4700D805FF /* IJSVGExampleTests.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		595665DE19B6309C00D805FF /* test.svg in Resources */ = {isa = PBXBuildFile; fileRef = 595665DD19B6309C00D805FF /* test.svg */; };
 		595665E119B630B600D805FF /* SVGView.m in Sources */ = {isa = PBXBuildFile; fileRef = 595665E019B630B600D805FF /* SVGView.m */; };
 		595A69DC285644E700525065 /* Bayer_matrix.svg in Resources */ = {isa = PBXBuildFile; fileRef = 595A69DB285644E700525065 /* Bayer_matrix.svg */; };
@@ -68,16 +67,6 @@
 		59F799E219B880CE00096CB7 /* htc_one.svg in Resources */ = {isa = PBXBuildFile; fileRef = 59F799E119B880CE00096CB7 /* htc_one.svg */; };
 		7BBD968B2B7BAF60009E2C1B /* IJSVG in Frameworks */ = {isa = PBXBuildFile; productRef = 7BBD968A2B7BAF60009E2C1B /* IJSVG */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		5956658B19B62F4700D805FF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5956656F19B62F4600D805FF /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5956657619B62F4600D805FF;
-			remoteInfo = IJSVGExample;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		59FB54BF280B03EE00D148FA /* CopyFiles */ = {
@@ -133,9 +122,6 @@
 		5956657F19B62F4600D805FF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		5956658119B62F4600D805FF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		5956658419B62F4600D805FF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		5956658A19B62F4700D805FF /* IJSVGExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IJSVGExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5956658F19B62F4700D805FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5956659019B62F4700D805FF /* IJSVGExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IJSVGExampleTests.m; sourceTree = "<group>"; };
 		5956659A19B62F9500D805FF /* IJSVGExample-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IJSVGExample-Prefix.pch"; sourceTree = "<group>"; };
 		595665DD19B6309C00D805FF /* test.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = test.svg; sourceTree = "<group>"; };
 		595665DF19B630B600D805FF /* SVGView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGView.h; sourceTree = "<group>"; };
@@ -177,13 +163,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5956658719B62F4700D805FF /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -192,7 +171,6 @@
 			children = (
 				7BBD96892B7BAE40009E2C1B /* IJSVG */,
 				5956657919B62F4600D805FF /* IJSVGExample */,
-				5956658D19B62F4700D805FF /* IJSVGExampleTests */,
 				5956657819B62F4600D805FF /* Products */,
 				59FB54BD280B03E600D148FA /* Frameworks */,
 			);
@@ -202,7 +180,6 @@
 			isa = PBXGroup;
 			children = (
 				5956657719B62F4600D805FF /* IJSVGExample.app */,
-				5956658A19B62F4700D805FF /* IJSVGExampleTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -291,23 +268,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		5956658D19B62F4700D805FF /* IJSVGExampleTests */ = {
-			isa = PBXGroup;
-			children = (
-				5956659019B62F4700D805FF /* IJSVGExampleTests.m */,
-				5956658E19B62F4700D805FF /* Supporting Files */,
-			);
-			path = IJSVGExampleTests;
-			sourceTree = "<group>";
-		};
-		5956658E19B62F4700D805FF /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				5956658F19B62F4700D805FF /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		59FB54BD280B03E600D148FA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -339,24 +299,6 @@
 			productReference = 5956657719B62F4600D805FF /* IJSVGExample.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5956658919B62F4700D805FF /* IJSVGExampleTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5956659719B62F4700D805FF /* Build configuration list for PBXNativeTarget "IJSVGExampleTests" */;
-			buildPhases = (
-				5956658619B62F4700D805FF /* Sources */,
-				5956658719B62F4700D805FF /* Frameworks */,
-				5956658819B62F4700D805FF /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5956658C19B62F4700D805FF /* PBXTargetDependency */,
-			);
-			name = IJSVGExampleTests;
-			productName = IJSVGExampleTests;
-			productReference = 5956658A19B62F4700D805FF /* IJSVGExampleTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -369,10 +311,6 @@
 				TargetAttributes = {
 					5956657619B62F4600D805FF = {
 						CreatedOnToolsVersion = 6.0;
-					};
-					5956658919B62F4700D805FF = {
-						CreatedOnToolsVersion = 6.0;
-						TestTargetID = 5956657619B62F4600D805FF;
 					};
 				};
 			};
@@ -390,7 +328,6 @@
 			projectRoot = "";
 			targets = (
 				5956657619B62F4600D805FF /* IJSVGExample */,
-				5956658919B62F4700D805FF /* IJSVGExampleTests */,
 			);
 		};
 /* End PBXProject section */
@@ -452,13 +389,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5956658819B62F4700D805FF /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -478,23 +408,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5956658619B62F4700D805FF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5956659119B62F4700D805FF /* IJSVGExampleTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		5956658C19B62F4700D805FF /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5956657619B62F4600D805FF /* IJSVGExample */;
-			targetProxy = 5956658B19B62F4700D805FF /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5956658319B62F4600D805FF /* MainMenu.xib */ = {
@@ -657,58 +571,6 @@
 			};
 			name = Release;
 		};
-		5956659819B62F4700D805FF /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = IJSVGExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.iconjar.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IJSVGExample.app/Contents/MacOS/IJSVGExample";
-			};
-			name = Debug;
-		};
-		5956659919B62F4700D805FF /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = IJSVGExampleTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.iconjar.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/IJSVGExample.app/Contents/MacOS/IJSVGExample";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -726,15 +588,6 @@
 			buildConfigurations = (
 				5956659519B62F4700D805FF /* Debug */,
 				5956659619B62F4700D805FF /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5956659719B62F4700D805FF /* Build configuration list for PBXNativeTarget "IJSVGExampleTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5956659819B62F4700D805FF /* Debug */,
-				5956659919B62F4700D805FF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
