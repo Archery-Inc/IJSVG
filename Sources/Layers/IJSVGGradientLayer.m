@@ -8,7 +8,7 @@
 
 #import "IJSVGGradientLayer.h"
 #import "IJSVGRootLayer.h"
-#import "UIColor+macOS.h"
+#import "IJSVGXEntities.h"
 
 @implementation IJSVGGradientLayer
 

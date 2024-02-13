@@ -6,6 +6,8 @@
 //  Copyright © 2017 Curtis Hard. All rights reserved.
 //
 
+#if __has_include(<AppKit/AppKit.h>)
+
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
@@ -61,3 +63,5 @@ static NSInteger const kIJSVGExporterPathInstructionFloatPrecision = 3;
 static CGFloat const kIJSVGExporterPathInstructionErrorThreshold = 1e-2;
 
 #define IJ_SVG_EXPORT_ROUND(value) IJSVGExporterPathFloatToFixed(value, kIJSVGExporterPathInstructionFloatPrecision)
+
+#endif

@@ -9,7 +9,7 @@
 #import "IJSVGImage.h"
 #import "IJSVGPath.h"
 #import "IJSVGTransform.h"
-#import "UIImage+macOS.h"
+#import "IJSVGXEntities.h"
 
 @implementation IJSVGImage
 

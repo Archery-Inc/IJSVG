@@ -11,7 +11,6 @@
 #import "IJSVGTransaction.h"
 #import "IJSVGThreadManager.h"
 #import "IJSVGXEntities.h"
-#import "UIScreen+macOS.h"
 
 @implementation IJSVG
 
@@ -593,7 +592,12 @@
              error:(NSError**)error
 {
     CGContextRef currentCGContext;
+#if __has_include(<AppKit/AppKit.h>)
     currentCGContext = NSGraphicsContext.currentContext.CGContext;
+#endif
+#if __has_include(<UIKit/UIKit.h>)
+    currentCGContext = UIGraphicsGetCurrentContext();
+#endif
     return [self _drawInRect:rect
                      context:currentCGContext
                        error:error];

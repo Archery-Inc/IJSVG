@@ -42,7 +42,7 @@
 @import UIKit;
 @import TouchXML;
 
-# import "CGColorSpaceWrapper.h"
+# define NSCompositingOperationCopy 1
 
 # define XColor UIColor
 # define XColorSpace CGColorSpaceWrapper
@@ -58,5 +58,12 @@
 # define XRectToCGRect (CGRect)
 # define XScreen UIScreen
 # define XView UIView
+
+# import "CGColorSpaceWrapper.h"
+# import "NSString+macOS.h"
+# import "NSValue+macOS.h"
+# import "UIColor+macOS.h"
+# import "UIImage+macOS.h"
+# import "UIScreen+macOS.h"
 
 #endif

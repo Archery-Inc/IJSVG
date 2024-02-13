@@ -6,6 +6,8 @@
 //  Copyright © 2017 Curtis Hard. All rights reserved.
 //
 
+#if __has_include(<AppKit/AppKit.h>)
+
 #import "IJSVGExporter.h"
 #import "IJSVGExporterPathInstruction.h"
 #import "IJSVGUtils.h"
@@ -650,3 +652,5 @@ void IJSVGExporterPathInstructionRoundData(CGFloat* data, NSInteger length,
 }
 
 @end
+
+#endif

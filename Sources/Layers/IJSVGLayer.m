@@ -12,6 +12,7 @@
 #import "IJSVGShapeLayer.h"
 #import "IJSVGTransformLayer.h"
 #import "IJSVGRootLayer.h"
+#import "IJSVGXEntities.h"
 
 CGRect IJSVGLayerGetBoundingBoxBounds(CALayer<IJSVGDrawableLayer>* drawableLayer)
 {

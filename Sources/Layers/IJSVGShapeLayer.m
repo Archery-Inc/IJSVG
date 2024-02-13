@@ -13,7 +13,6 @@
 #import "IJSVGTraitedColorStorage.h"
 #import "IJSVGPatternLayer.h"
 #import "IJSVGXEntities.h"
-#import "UIColor+macOS.h"
 
 @implementation IJSVGShapeLayer
 
