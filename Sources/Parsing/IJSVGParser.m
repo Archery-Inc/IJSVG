@@ -782,7 +782,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     CXMLNodeKind nodeKind = element.kind;
     IJSVGNodeType nodeType = [IJSVGNode typeForString:name
                                                  kind:nodeKind];
-        
+    
     [self parseDefElement:element
                parentNode:node
                 recursive:NO];
