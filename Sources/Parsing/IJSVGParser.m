@@ -1649,6 +1649,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
               recursive:(BOOL)recursive
 {
     for(CXMLElement* childElement in element.children) {
+        if (childElement.kind == CXMLTextKind) continue;
         IJSVGNodeType type = [IJSVGNode typeForString:childElement.localName
                                                  kind:childElement.kind];
         
