@@ -1,0 +1,1 @@
+../Colors/IJSVGTraitedColor.h

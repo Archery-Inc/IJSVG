@@ -1,0 +1,1 @@
+../Layers/IJSVGPatternLayer.h

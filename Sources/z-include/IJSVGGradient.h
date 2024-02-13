@@ -1,0 +1,1 @@
+../Nodes/IJSVGGradient.h

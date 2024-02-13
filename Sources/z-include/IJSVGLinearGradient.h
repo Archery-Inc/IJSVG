@@ -1,0 +1,1 @@
+../Nodes/IJSVGLinearGradient.h

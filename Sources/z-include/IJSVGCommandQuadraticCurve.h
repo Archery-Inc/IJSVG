@@ -1,0 +1,1 @@
+../Commands/IJSVGCommandQuadraticCurve.h
