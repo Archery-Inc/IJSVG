@@ -107,16 +107,16 @@ const NSArray* IJSVGInheritableAttributes(void)
     return _attributes;
 }
 
-void IJSVGApplyAttributesToElement(NSDictionary* _Nonnull attributes, NSXMLElement* element)
+void IJSVGApplyAttributesToElement(NSDictionary* _Nonnull attributes, CXMLElement* element)
 {
     [element setAttributesAsDictionary:attributes];
 };
 
-NSDictionary<NSString*, NSString*>* IJSVGElementAttributeDictionary(NSXMLElement* element)
+NSDictionary<NSString*, NSString*>* IJSVGElementAttributeDictionary(CXMLElement* element)
 {
     NSArray* atts = element.attributes;
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] initWithCapacity:atts.count];
-    for (NSXMLNode* attribute in atts) {
+    for (CXMLNode* attribute in atts) {
         dict[attribute.name] = attribute.stringValue;
     }
     return dict;
@@ -167,15 +167,15 @@ NSString* IJSVGHash(NSString* key)
     _respondsTo.stringForColor = [delegate respondsToSelector:@selector(svgExporter:stringForColor:flags:options:)];
 }
 
-- (NSXMLElement*)defElement
+- (CXMLElement*)defElement
 {
     if(_defElement != nil) {
         return _defElement;
     }
-    return _defElement = [[NSXMLElement alloc] initWithName:@"defs"];
+    return _defElement = [[CXMLElement alloc] initWithName:@"defs"];
 }
 
-- (NSString*)viewBoxWithRect:(NSRect)rect
+- (NSString*)viewBoxWithRect:(XRect)rect
 {
     return [NSString stringWithFormat:@"%@ %@ %@ %@",
         IJSVGShortFloatStringWithOptions(CGRectGetMinX(rect), _floatingPointOptions),
@@ -185,10 +185,10 @@ NSString* IJSVGHash(NSString* key)
     ];
 }
 
-- (NSXMLElement*)rootNode
+- (CXMLElement*)rootNode
 {
     // generates the root document
-    NSXMLElement* root = [[NSXMLElement alloc] initWithName:@"svg"];
+    CXMLElement* root = [[CXMLElement alloc] initWithName:@"svg"];
     
     [self applyDefaultsForRoot:_svg.rootLayer
                      toElement:root];
@@ -275,7 +275,7 @@ NSString* IJSVGHash(NSString* key)
 
     // set and add the attribute onto the rootElement
     _appliedXLink = YES;
-    NSXMLElement* root = _dom.rootElement;
+    CXMLElement* root = _dom.rootElement;
     IJSVGApplyAttributesToElement(@{
         IJSVGAttributeXMLNSXlink: XML_DOC_NSXLINK
     }, root);
@@ -303,19 +303,19 @@ NSString* IJSVGHash(NSString* key)
     _defElement = nil;
     
     // create the stand alone DOM
-    NSXMLElement* rootNode = [self rootNode];
-    _dom = [[NSXMLDocument alloc] initWithRootElement:rootNode];
+    CXMLElement* rootNode = [self rootNode];
+    _dom = [[CXMLDocument alloc] initWithRootElement:rootNode];
     _dom.version = XML_DOCTYPE_VERSION;
     _dom.characterEncoding = XML_DOC_CHARSET;
 
     // sort out stuff, so here we go...
-    for(NSXMLElement* childLayer in _svg.rootLayer.sublayers) {
+    for(CXMLElement* childLayer in _svg.rootLayer.sublayers) {
         [self _recursiveParseFromLayer:(CALayer<IJSVGDrawableLayer>*)childLayer
                            intoElement:rootNode];
     }
 
     // this needs to be added incase it needs to be cleaned
-    NSXMLElement* defNode = [self defElement];
+    CXMLElement* defNode = [self defElement];
     if(defNode.childCount != 0) {
         [_dom.rootElement insertChild:[self defElement]
                               atIndex:0];
@@ -332,7 +332,7 @@ NSString* IJSVGHash(NSString* key)
 
     // add generator
     if(IJSVGExporterHasOption(_options, IJSVGExporterOptionRemoveComments) == NO) {
-        NSXMLNode* generatorNode = [[NSXMLNode alloc] initWithKind:NSXMLCommentKind];
+        CXMLNode* generatorNode = [[CXMLNode alloc] initWithKind:CXMLCommentKind];
         generatorNode.stringValue = XML_DOC_GENERATOR;
         [_dom.rootElement insertChild:generatorNode
                               atIndex:0];
@@ -399,9 +399,9 @@ NSString* IJSVGHash(NSString* key)
 
 - (void)_cleanupUseTransforms
 {
-    NSArray<NSXMLElement*>* elements = [_dom nodesForXPath:@"//use"
+    NSArray<CXMLElement*>* elements = [_dom nodesForXPath:@"//use"
                                                      error:nil];
-    for (NSXMLElement* element in elements) {
+    for (CXMLElement* element in elements) {
         NSString* att = [element attributeForName:IJSVGAttributeTransform].stringValue;
         if(att == nil || [element attributeForName:IJSVGAttributeX] != nil ||
             [element attributeForName:IJSVGAttributeY] != nil) {
@@ -415,13 +415,13 @@ NSString* IJSVGHash(NSString* key)
             [element removeAttributeForName:IJSVGAttributeTransform];
 
             // x
-            NSXMLNode* att = [[NSXMLNode alloc] initWithKind:NSXMLAttributeKind];
+            CXMLNode* att = [[CXMLNode alloc] initWithKind:CXMLAttributeKind];
             att.name = IJSVGAttributeX;
             att.stringValue = IJSVGShortFloatStringWithOptions(transform.parameters[0], _floatingPointOptions);
             [element addAttribute:att];
 
             // y
-            att = [[NSXMLNode alloc] initWithKind:NSXMLAttributeKind];
+            att = [[CXMLNode alloc] initWithKind:CXMLAttributeKind];
             att.name = IJSVGAttributeY;
             att.stringValue = IJSVGShortFloatStringWithOptions(transform.parameters[1], _floatingPointOptions);
             [element addAttribute:att];
@@ -429,14 +429,14 @@ NSString* IJSVGHash(NSString* key)
     }
 }
 
-- (void)_sortAttributesOnElement:(NSXMLElement*)element
+- (void)_sortAttributesOnElement:(CXMLElement*)element
 {
     // only apply to XML elements, not XMLNodes
-    if([element isKindOfClass:[NSXMLElement class]] == NO) {
+    if([element isKindOfClass:[CXMLElement class]] == NO) {
         return;
     }
     [self sortAttributesOnElement:element];
-    for (NSXMLElement* child in element.children) {
+    for (CXMLElement* child in element.children) {
         [self _sortAttributesOnElement:child];
     }
 }
@@ -445,11 +445,11 @@ NSString* IJSVGHash(NSString* key)
 {
     // find any elements where they have a style, but the element itself
     // must not be in the defs
-    NSArray<NSXMLElement*>* elements = [_dom nodesForXPath:@"//*[@display='none']"
+    NSArray<CXMLElement*>* elements = [_dom nodesForXPath:@"//*[@display='none']"
                                                      error:nil];
 
-    for (NSXMLElement* element in elements) {
-        NSXMLElement* parent = (NSXMLElement*)element.parent;
+    for (CXMLElement* element in elements) {
+        CXMLElement* parent = (CXMLElement*)element.parent;
         [parent removeChildAtIndex:element.index];
     }
 }
@@ -457,11 +457,11 @@ NSString* IJSVGHash(NSString* key)
 - (void)_collapseGradients
 {
     NSString* xPath = @"//defs/*[self::linearGradient or self::radialGradient]";
-    NSArray<NSXMLElement*>* gradients = [_dom nodesForXPath:xPath error:nil];
+    NSArray<CXMLElement*>* gradients = [_dom nodesForXPath:xPath error:nil];
     for (NSInteger i = 0; i < gradients.count; i++) {
         if(i != 0) {
-            NSXMLElement* gradientA = gradients[i];
-            NSXMLElement* gradientB = nil;
+            CXMLElement* gradientA = gradients[i];
+            CXMLElement* gradientB = nil;
             for (NSInteger s = (i - 1); s >= 0; s--) {
                 gradientB = gradients[s];
                 if([self compareElementChildren:gradientA toElement:gradientB] == YES) {
@@ -485,8 +485,8 @@ NSString* IJSVGHash(NSString* key)
     }
 }
 
-- (BOOL)compareElementChildren:(NSXMLElement*)element
-                     toElement:(NSXMLElement*)toElement
+- (BOOL)compareElementChildren:(CXMLElement*)element
+                     toElement:(CXMLElement*)toElement
 {
     NSArray* childrenA = element.children;
     NSArray* childrenB = toElement.children;
@@ -494,8 +494,8 @@ NSString* IJSVGHash(NSString* key)
         return NO;
     }
     for (NSInteger i = 0; i < childrenA.count; i++) {
-        NSXMLElement* childA = childrenA[i];
-        NSXMLElement* childB = childrenB[i];
+        CXMLElement* childA = childrenA[i];
+        CXMLElement* childB = childrenB[i];
         if([self compareElement:childA withElement:childB] == NO) {
             return NO;
         }
@@ -503,7 +503,7 @@ NSString* IJSVGHash(NSString* key)
     return YES;
 }
 
-- (void)_moveAttributesToGroupWithElement:(NSXMLElement*)parentElement
+- (void)_moveAttributesToGroupWithElement:(CXMLElement*)parentElement
 {
     const NSArray<NSString*>* excludedElements = @[ @"script", @"style", @"defs" ];
     if([excludedElements containsObject:parentElement.name]) {
@@ -512,7 +512,7 @@ NSString* IJSVGHash(NSString* key)
 
     const NSArray<NSString*>* inheritableAttributes = IJSVGInheritableAttributes();
     __block NSDictionary<NSString*, NSString*>* intersection = nil;
-    NSMutableArray<NSXMLElement*>* currentGroup = [[NSMutableArray alloc] init];
+    NSMutableArray<CXMLElement*>* currentGroup = [[NSMutableArray alloc] init];
 
     BOOL (^createGroupIfRequired)(void) = ^BOOL {
         // memory clean
@@ -524,13 +524,13 @@ NSString* IJSVGHash(NSString* key)
 
         // at this point we can create a new group and remove all the attributes
         NSInteger insertIndex = currentGroup.lastObject.index;
-        NSXMLElement* group = [[NSXMLElement alloc] initWithName:@"g"];
+        CXMLElement* group = [[CXMLElement alloc] initWithName:@"g"];
         IJSVGApplyAttributesToElement(intersection, group);
 
         // add back into the dom
-        [(NSXMLElement*)currentGroup.lastObject.parent replaceChildAtIndex:insertIndex
+        [(CXMLElement*)currentGroup.lastObject.parent replaceChildAtIndex:insertIndex
                                                                   withNode:group];
-        for (NSXMLElement* child in currentGroup) {
+        for (CXMLElement* child in currentGroup) {
             @autoreleasepool {
                 NSDictionary<NSString*, NSString*>* childIntersection = nil;
                 NSDictionary<NSString*, NSString*>* childAttributes = nil;
@@ -558,7 +558,7 @@ NSString* IJSVGHash(NSString* key)
     for (NSInteger i = 0; i < parentElement.children.count; i++) {
         @autoreleasepool {
             // the current elements attributes that are inheritable
-            NSXMLElement* element = (NSXMLElement*)parentElement.children[i];
+            CXMLElement* element = (CXMLElement*)parentElement.children[i];
             NSDictionary<NSString*, NSString*>* attributes = nil;
             attributes = [self intersectableAttributes:IJSVGElementAttributeDictionary(element)
                                  inheritableAttributes:inheritableAttributes];
@@ -568,8 +568,8 @@ NSString* IJSVGHash(NSString* key)
                 [currentGroup addObject:element];
             }
 
-            NSXMLElement* nextSibling = element;
-            while ((nextSibling = (NSXMLElement*)nextSibling.nextSibling) != nil) {
+            CXMLElement* nextSibling = element;
+            while ((nextSibling = (CXMLElement*)nextSibling.nextSibling) != nil) {
                 @autoreleasepool {
                     NSDictionary<NSString*, NSString*>* siblingAttributes = nil;
                     NSDictionary<NSString*, NSString*>* siblingIntersection = nil;
@@ -599,7 +599,7 @@ NSString* IJSVGHash(NSString* key)
 
     // perform the recursive calls to all children that are groups
     // including ones that were just created
-    for (NSXMLElement* element in parentElement.children) {
+    for (CXMLElement* element in parentElement.children) {
         if([element.name isEqualToString:@"g"]) {
             [self _moveAttributesToGroupWithElement:element];
         }
@@ -646,9 +646,9 @@ NSString* IJSVGHash(NSString* key)
 
 - (void)_cleanDef
 {
-    NSXMLElement* defNode = [self defElement];
+    CXMLElement* defNode = [self defElement];
     if(defNode.children == 0) {
-        NSXMLElement* parent = (NSXMLElement*)defNode.parent;
+        CXMLElement* parent = (CXMLElement*)defNode.parent;
         [parent removeChildAtIndex:defNode.index];
     }
 }
@@ -658,16 +658,16 @@ NSString* IJSVGHash(NSString* key)
     @autoreleasepool {
         // cleanup any groups that are completely useless
         NSArray* groups = [_dom nodesForXPath:@"//g" error:nil];
-        for (NSXMLElement* element in groups) {
-            NSXMLElement* parent = (NSXMLElement*)element.parent;
+        for (CXMLElement* element in groups) {
+            CXMLElement* parent = (CXMLElement*)element.parent;
             if(element.childCount == 0) {
                 // empty group
-                [(NSXMLElement*)element.parent removeChildAtIndex:element.index];
+                [(CXMLElement*)element.parent removeChildAtIndex:element.index];
             } else if(element.attributes.count == 0) {
                 // no useful data on the group
                 NSInteger index = element.index;
-                for (NSXMLElement* child in element.children) {
-                    [(NSXMLElement*)child.parent removeChildAtIndex:child.index];
+                for (CXMLElement* child in element.children) {
+                    [(CXMLElement*)child.parent removeChildAtIndex:child.index];
                     [parent insertChild:child
                                 atIndex:index++];
                 }
@@ -680,7 +680,7 @@ NSString* IJSVGHash(NSString* key)
 - (void)_compressGroups
 {
     NSArray* groups = [_dom nodesForXPath:@"//g" error:nil];
-    for (NSXMLElement* group in groups) {
+    for (CXMLElement* group in groups) {
 
         // whats the next group?
         if(group.parent == nil) {
@@ -688,18 +688,18 @@ NSString* IJSVGHash(NSString* key)
         }
 
         // compare each group with its next sibling
-        NSXMLElement* nextGroup = (NSXMLElement*)group.nextSibling;
+        CXMLElement* nextGroup = (CXMLElement*)group.nextSibling;
         while ([self compareElement:group withElement:nextGroup]) {
             // move each child into the older group
-            for (NSXMLElement* child in nextGroup.children) {
+            for (CXMLElement* child in nextGroup.children) {
                 [nextGroup removeChildAtIndex:child.index];
                 [group addChild:child];
             }
 
             // remove the newer
-            NSXMLElement* n = nextGroup;
-            nextGroup = (NSXMLElement*)nextGroup.nextSibling;
-            [(NSXMLElement*)n.parent removeChildAtIndex:n.index];
+            CXMLElement* n = nextGroup;
+            nextGroup = (CXMLElement*)nextGroup.nextSibling;
+            [(CXMLElement*)n.parent removeChildAtIndex:n.index];
         }
     }
 }
@@ -708,7 +708,7 @@ NSString* IJSVGHash(NSString* key)
 {
     NSArray* groups = [_dom nodesForXPath:@"//g" error:nil];
     const NSArray* inheritable = IJSVGInheritableAttributes();
-    for (NSXMLElement* group in groups) {
+    for (CXMLElement* group in groups) {
 
         // dont do anything due to it being referenced
         if([group attributeForName:IJSVGAttributeID] != nil) {
@@ -718,12 +718,12 @@ NSString* IJSVGHash(NSString* key)
         if(group.attributes.count != 0 && group.children.count == 1) {
 
             // grab the first child as its a loner
-            NSXMLElement* child = (NSXMLElement*)group.children[0];
+            CXMLElement* child = (CXMLElement*)group.children[0];
             if([child attributeForName:IJSVGAttributeTransform] != nil) {
                 continue;
             }
 
-            for (NSXMLNode* gAttribute in group.attributes) {
+            for (CXMLNode* gAttribute in group.attributes) {
 
                 // if it just doesnt have the attriute, just add it
                 if([child attributeForName:gAttribute.name] == NO) {
@@ -732,13 +732,13 @@ NSString* IJSVGHash(NSString* key)
                     [child addAttribute:gAttribute];
                 } else if([gAttribute.name isEqualToString:IJSVGAttributeTransform]) {
                     // transform requires concatination
-                    NSXMLNode* childTransform = [child attributeForName:IJSVGAttributeTransform];
+                    CXMLNode* childTransform = [child attributeForName:IJSVGAttributeTransform];
                     childTransform.stringValue = [NSString stringWithFormat:@"%@ %@",
                                                            gAttribute.stringValue, childTransform.stringValue];
 
                 } else if([inheritable containsObject:gAttribute.name] == NO) {
                     // if its not inheritable, only remove it if its not equal
-                    NSXMLNode* aAtt = [child attributeForName:gAttribute.name];
+                    CXMLNode* aAtt = [child attributeForName:gAttribute.name];
                     if(aAtt == nil || (aAtt != nil && [aAtt.stringValue isEqualToString:gAttribute.stringValue] == NO)) {
                         continue;
                     }
@@ -749,15 +749,15 @@ NSString* IJSVGHash(NSString* key)
             // remove the group as its useless!
             if(group.attributes.count == 0) {
                 [child detach];
-                [(NSXMLElement*)group.parent replaceChildAtIndex:group.index
+                [(CXMLElement*)group.parent replaceChildAtIndex:group.index
                                                         withNode:child];
             }
         }
     }
 }
 
-- (BOOL)compareElement:(NSXMLElement*)element
-           withElement:(NSXMLElement*)anotherElement
+- (BOOL)compareElement:(CXMLElement*)element
+           withElement:(CXMLElement*)anotherElement
 {
     // not a matching element
     if([element.name isEqualToString:anotherElement.name] == NO ||
@@ -766,7 +766,7 @@ NSString* IJSVGHash(NSString* key)
     }
 
     // compare attributes
-    for (NSXMLNode* attribute in element.attributes) {
+    for (CXMLNode* attribute in element.attributes) {
         NSString* compareString = [anotherElement attributeForName:attribute.name].stringValue;
         if([attribute.stringValue isEqualToString:compareString] == NO) {
             return NO;
@@ -782,24 +782,24 @@ NSString* IJSVGHash(NSString* key)
                                        error:nil];
 
         NSCountedSet* set = [[NSCountedSet alloc] init];
-        for (NSXMLElement* element in paths) {
+        for (CXMLElement* element in paths) {
             [set addObject:[element attributeForName:IJSVGAttributeD].stringValue];
         }
 
         NSMutableDictionary* defs = [[NSMutableDictionary alloc] init];
 
         // now actually compute them
-        for (NSXMLElement* element in paths) {
+        for (CXMLElement* element in paths) {
             NSString* data = [element attributeForName:IJSVGAttributeD].stringValue;
             if([set countForObject:data] == 1) {
                 continue;
             }
 
             // at this point, we know the path is being used more then once
-            NSXMLElement* defParentElement = nil;
+            CXMLElement* defParentElement = nil;
             if((defParentElement = [defs objectForKey:data]) == nil) {
                 // create the def
-                NSXMLElement* element = [[NSXMLElement alloc] init];
+                CXMLElement* element = [[CXMLElement alloc] init];
                 element.name = @"path";
 
                 NSDictionary* atts = @{
@@ -814,20 +814,20 @@ NSString* IJSVGHash(NSString* key)
             }
 
             // we know at this point, we need to swap out the path to a use
-            NSXMLElement* use = [[NSXMLElement alloc] init];
+            CXMLElement* use = [[CXMLElement alloc] init];
             use.name = @"use";
 
             // grab the id
             NSString* pathId = [defParentElement attributeForName:IJSVGAttributeID].stringValue;
 
-            NSXMLNode* useAttribute = [[NSXMLNode alloc] initWithKind:NSXMLAttributeKind];
+            CXMLNode* useAttribute = [[CXMLNode alloc] initWithKind:CXMLAttributeKind];
             useAttribute.name = IJSVGAttributeXLink;
             useAttribute.stringValue = IJSVGHash(pathId);
             [use addAttribute:useAttribute];
             [self applyXLinkToRootElement];
 
             // remove the d attribute
-            for (NSXMLNode* attribute in element.attributes) {
+            for (CXMLNode* attribute in element.attributes) {
                 if([attribute.name isEqualToString:IJSVGAttributeD]) {
                     continue;
                 }
@@ -836,54 +836,54 @@ NSString* IJSVGHash(NSString* key)
             }
 
             // swap it out
-            [(NSXMLElement*)element.parent replaceChildAtIndex:element.index
+            [(CXMLElement*)element.parent replaceChildAtIndex:element.index
                                                       withNode:use];
         }
 
         // add the defs back in
-        NSXMLElement* def = [self defElement];
-        for (NSXMLElement* defElement in defs.allValues) {
+        CXMLElement* def = [self defElement];
+        for (CXMLElement* defElement in defs.allValues) {
             [def addChild:defElement];
         }
     }
 }
 
 - (NSString*)_computedAttribute:(NSString*)attributeName
-                     forElement:(NSXMLElement*)element
+                     forElement:(CXMLElement*)element
 {
-    NSXMLNode* e = (NSXMLNode*)element;
+    CXMLNode* e = (CXMLNode*)element;
     if(e == _dom.rootElement || e == _dom.rootDocument) {
         return nil;
     }
 
-    NSXMLElement* el = element;
+    CXMLElement* el = element;
     while (el != nil) {
-        NSXMLNode* attribute = [el attributeForName:attributeName];
+        CXMLNode* attribute = [el attributeForName:attributeName];
         if(attribute != nil) {
             break;
         }
-        el = (NSXMLElement*)el.parent;
-        if(el == _dom.rootElement || (NSXMLNode*)el == _dom.rootDocument) {
+        el = (CXMLElement*)el.parent;
+        if(el == _dom.rootElement || (CXMLNode*)el == _dom.rootDocument) {
             el = nil;
             break;
         }
     }
 
-    NSXMLNode* attribute = [el attributeForName:attributeName];
+    CXMLNode* attribute = [el attributeForName:attributeName];
     if(attribute) {
         return attribute.stringValue;
     }
     return nil;
 }
 
-- (void)_removeDefaultAttributesOnElement:(NSXMLElement*)element
+- (void)_removeDefaultAttributesOnElement:(CXMLElement*)element
 {
     const NSDictionary<NSString*, NSString*>* defaults = IJSVGDefaultAttributes();
     const NSArray<NSString*>* inheritables = IJSVGInheritableAttributes();
-    if(element.kind == NSXMLElementKind) {
-        NSArray<NSXMLNode*>* attributes = element.attributes;
+    if(element.kind == CXMLElementKind) {
+        NSArray<CXMLNode*>* attributes = element.attributes;
         if([element attributeForName:IJSVGAttributeID] == nil) {
-            for (NSXMLNode* node in attributes) {
+            for (CXMLNode* node in attributes) {
                 // no value found in defaults
                 NSString* val = nil;
                 if((val = defaults[node.name]) == nil) {
@@ -891,7 +891,7 @@ NSString* IJSVGHash(NSString* key)
                 }
                 BOOL isInheritable = [inheritables containsObject:node.name];
                 NSString* parentComputed = [self _computedAttribute:node.name
-                                                         forElement:(NSXMLElement*)element.parent];
+                                                         forElement:(CXMLElement*)element.parent];
                 BOOL isDefault = [val isEqualToString:node.stringValue] && (isInheritable == NO || parentComputed == nil);
                 if(isDefault) {
                     [element removeAttributeForName:node.name];
@@ -899,7 +899,7 @@ NSString* IJSVGHash(NSString* key)
             }
         }
     }
-    for (NSXMLElement* childElement in element.children) {
+    for (CXMLElement* childElement in element.children) {
         [self _removeDefaultAttributesOnElement:childElement];
     }
 }
@@ -909,8 +909,8 @@ NSString* IJSVGHash(NSString* key)
     [self _removeDefaultAttributesOnElement:_dom.rootElement];
 }
 
-- (NSXMLElement*)elementForLayer:(CALayer<IJSVGDrawableLayer>*)layer
-                      fromParent:(NSXMLElement*)element
+- (CXMLElement*)elementForLayer:(CALayer<IJSVGDrawableLayer>*)layer
+                      fromParent:(CXMLElement*)element
 {
     // root layer
     if(layer.class == IJSVGRootLayer.class) {
@@ -947,17 +947,17 @@ NSString* IJSVGHash(NSString* key)
 }
 
 - (void)_recursiveParseFromLayer:(CALayer<IJSVGDrawableLayer>*)layer
-                     intoElement:(NSXMLElement*)element
+                     intoElement:(CXMLElement*)element
 {
-    NSXMLElement* el = [self elementForLayer:layer
+    CXMLElement* el = [self elementForLayer:layer
                                   fromParent:element];
     
     if(el != nil) {
-        NSArray<NSXMLElement*>* beforeElements = nil;
-        NSArray<NSXMLElement*>* afterElements = nil;
+        NSArray<CXMLElement*>* beforeElements = nil;
+        NSArray<CXMLElement*>* afterElements = nil;
         NSNumber* ignore = nil;
         if((beforeElements = objc_getAssociatedObject(el, &IJSVGExporterInsertBeforeElementsKey)) != nil) {
-            for(NSXMLElement* beforeElement in beforeElements) {
+            for(CXMLElement* beforeElement in beforeElements) {
                 [element addChild:beforeElement];
             }
         }
@@ -966,7 +966,7 @@ NSString* IJSVGHash(NSString* key)
             [element addChild:el];
         }
         if((afterElements = objc_getAssociatedObject(el, &IJSVGExporterInsertAfterElementsKey)) != nil) {
-            for(NSXMLElement* afterElement in afterElements) {
+            for(CXMLElement* afterElement in afterElements) {
                 [element addChild:afterElement];
             }
         }
@@ -991,7 +991,7 @@ NSString* IJSVGHash(NSString* key)
     return [IJSVGTransform affineTransformToSVGTransformComponentString:transform];
 }
 
-- (void)applyTransformToElement:(NSXMLElement*)element
+- (void)applyTransformToElement:(CXMLElement*)element
                       fromLayer:(CALayer<IJSVGDrawableLayer>*)layer
 {
     CGAffineTransform transform = layer.affineTransform;
@@ -1008,12 +1008,12 @@ NSString* IJSVGHash(NSString* key)
     }, element);
 }
 
-- (NSXMLElement*)elementForGroupName:(NSString*)name
+- (CXMLElement*)elementForGroupName:(NSString*)name
                                layer:(CALayer<IJSVGDrawableLayer>*)layer
-                          fromParent:(NSXMLElement*)parent
+                          fromParent:(CXMLElement*)parent
 {
     // create the element
-    NSXMLElement* e = [[NSXMLElement alloc] init];
+    CXMLElement* e = [[CXMLElement alloc] init];
     e.name = name;
 
     // stick defaults
@@ -1029,8 +1029,8 @@ NSString* IJSVGHash(NSString* key)
     return e;
 }
 
-- (NSXMLElement*)elementForGroup:(CALayer<IJSVGDrawableLayer>*)layer
-                      fromParent:(NSXMLElement*)parent
+- (CXMLElement*)elementForGroup:(CALayer<IJSVGDrawableLayer>*)layer
+                      fromParent:(CXMLElement*)parent
 {
     return [self elementForGroupName:@"g"
                                layer:layer
@@ -1038,7 +1038,7 @@ NSString* IJSVGHash(NSString* key)
 }
 
 - (void)applyDefaultsForRoot:(IJSVGRootLayer*)layer
-                   toElement:(NSXMLElement*)element
+                   toElement:(CXMLElement*)element
 {
     CGSize parentSize = layer.superlayer.frame.size;
     NSMutableDictionary<NSString*, NSString*>* attributes = nil;
@@ -1083,11 +1083,11 @@ NSString* IJSVGHash(NSString* key)
     }
 }
 
-- (NSXMLElement*)elementForRoot:(IJSVGRootLayer*)layer
-                     fromParent:(NSXMLElement*)parent
+- (CXMLElement*)elementForRoot:(IJSVGRootLayer*)layer
+                     fromParent:(CXMLElement*)parent
 {
     // create the element
-    NSXMLElement* element = [[NSXMLElement alloc] init];
+    CXMLElement* element = [[CXMLElement alloc] init];
     element.name = @"svg";
     
     [self applyDefaultsForRoot:layer
@@ -1109,7 +1109,7 @@ NSString* IJSVGHash(NSString* key)
         return nil;
     }
 
-    // convert the CGImage into an NSImage
+    // convert the CGImage into an XImage
     NSBitmapImageRep* rep = [[NSBitmapImageRep alloc] initWithCGImage:image];
 
     // work out the data
@@ -1123,7 +1123,7 @@ NSString* IJSVGHash(NSString* key)
 - (void)applyPatternFromLayer:(IJSVGPatternLayer*)layer
                   parentLayer:(CALayer<IJSVGDrawableLayer>*)parentLayer
                        stroke:(BOOL)stroke
-                    toElement:(NSXMLElement*)element
+                    toElement:(CXMLElement*)element
 {
     // now we need the pattern
     IJSVGGroupLayer* patternLayer = (IJSVGGroupLayer*)layer.pattern;
@@ -1141,7 +1141,7 @@ NSString* IJSVGHash(NSString* key)
         return;
     }
 
-    NSXMLElement* patternElement = [self elementForGroupName:@"pattern"
+    CXMLElement* patternElement = [self elementForGroupName:@"pattern"
                                                        layer:patternLayer
                                                   fromParent:element];
     
@@ -1201,7 +1201,7 @@ NSString* IJSVGHash(NSString* key)
     [[self defElement] addChild:patternElement];
 
     // now the use statement
-    NSXMLElement* useElement = [[NSXMLElement alloc] init];
+    CXMLElement* useElement = [[CXMLElement alloc] init];
     useElement.name = @"use";
 
     // now add the fill
@@ -1227,10 +1227,10 @@ NSString* IJSVGHash(NSString* key)
 - (void)applyGradientFromLayer:(IJSVGGradientLayer*)layer
                    parentLayer:(CALayer<IJSVGDrawableLayer>*)parentLayer
                         stroke:(BOOL)stroke
-                     toElement:(NSXMLElement*)element
+                     toElement:(CXMLElement*)element
 {
     IJSVGGradient* gradient = layer.gradient;
-    NSXMLElement* gradientElement = [[NSXMLElement alloc] init];
+    CXMLElement* gradientElement = [[CXMLElement alloc] init];
 
     // work out linear gradient
     if(gradient.class == IJSVGLinearGradient.class) {
@@ -1278,9 +1278,9 @@ NSString* IJSVGHash(NSString* key)
     // add the stops
 //    IJSVGColorList* sheet = layer.gradient.computedColorList;
     NSInteger index = 0;
-    for (NSColor* color in gradient.colors) {
+    for (XColor* color in gradient.colors) {
         // grab each color from the gradient
-        NSColor* aColor = color;
+        XColor* aColor = color;
         CGFloat location = gradient.locations[index++];
 
 //        if(sheet != nil) {
@@ -1288,7 +1288,7 @@ NSString* IJSVGHash(NSString* key)
 //        }
 
         // create the stop element
-        NSXMLElement* stop = [[NSXMLElement alloc] init];
+        CXMLElement* stop = [[CXMLElement alloc] init];
         stop.name = @"stop";
 
         NSMutableDictionary* atts = [[NSMutableDictionary alloc] init];
@@ -1352,16 +1352,16 @@ NSString* IJSVGHash(NSString* key)
     }
 }
 
-- (NSXMLElement*)elementForFilter:(IJSVGFilterLayer*)layer
-                       fromParent:(NSXMLElement*)parent
+- (CXMLElement*)elementForFilter:(IJSVGFilterLayer*)layer
+                       fromParent:(CXMLElement*)parent
 {
     [self _recursiveParseFromLayer:(CALayer<IJSVGDrawableLayer>*)layer.sublayer
                        intoElement:parent];
     return nil;
 }
 
-- (NSXMLElement*)elementForImage:(IJSVGImageLayer*)layer
-                      fromParent:(NSXMLElement*)parent
+- (CXMLElement*)elementForImage:(IJSVGImageLayer*)layer
+                      fromParent:(CXMLElement*)parent
 {
     IJSVGImage* image = layer.image;
     if(image == nil) {
@@ -1369,19 +1369,19 @@ NSString* IJSVGHash(NSString* key)
     }
 
     // image element for the SVG
-    NSXMLElement* imageElement = [[NSXMLElement alloc] init];
+    CXMLElement* imageElement = [[CXMLElement alloc] init];
     imageElement.name = @"image";
     
     // we need to transform this into its required aspect ratio
-    NSImage* nsImage = image.image;
+    XImage* XImage = image.image;
     CGFloat ratio = 0.f;
     CGImageRef cgImage = NULL;
     
     const CGRect bounds = image.bounds;
     const CGFloat imageWidth = bounds.size.width;
     const CGFloat imageHeight = bounds.size.height;
-    const CGFloat maxWidth = nsImage.size.width;
-    const CGFloat maxHeight = nsImage.size.height;
+    const CGFloat maxWidth = XImage.size.width;
+    const CGFloat maxHeight = XImage.size.height;
     
     // work out the ratio
     if(imageWidth > imageHeight) {
@@ -1393,7 +1393,7 @@ NSString* IJSVGHash(NSString* key)
     if(ratio != 1.f) {
         CGRect newImageRect = CGRectMake(0.f, 0.f, imageWidth*ratio,
                                          imageHeight*ratio);
-        NSImage* actualImage = [IJSVGUtils resizeImage:nsImage
+        XImage* actualImage = [IJSVGUtils resizeImage:XImage
                                                toSize:newImageRect.size];
         cgImage = [actualImage CGImageForProposedRect:&newImageRect
                                               context:NULL
@@ -1448,10 +1448,10 @@ NSString* IJSVGHash(NSString* key)
     }
 }
 
-- (NSXMLElement*)elementForShape:(IJSVGShapeLayer*)layer
-                      fromParent:(NSXMLElement*)parent
+- (CXMLElement*)elementForShape:(IJSVGShapeLayer*)layer
+                      fromParent:(CXMLElement*)parent
 {
-    NSXMLElement* e = [[NSXMLElement alloc] init];
+    CXMLElement* e = [[CXMLElement alloc] init];
     e.name = [self elementNameForPrimitiveType:layer.primitiveType];
     CGPathRef path = layer.path;
 
@@ -1798,8 +1798,8 @@ NSString* IJSVGHash(NSString* key)
     if(fillLayer != nil) {
         NSString* colorString = IJSVGStringNone;
         if(fillLayer.fillColor != NULL) {
-            NSColor* fillColor = nil;
-            fillColor = [NSColor colorWithCGColor:fillLayer.fillColor];
+            XColor* fillColor = nil;
+            fillColor = [XColor colorWithCGColor:fillLayer.fillColor];
             colorString = [self colorStringForColor:fillColor
                                                flag:IJSVGColorUsageTraitFill
                                             options:[self colorOptions]];
@@ -1838,7 +1838,7 @@ NSString* IJSVGHash(NSString* key)
             IJSVGLayerUsageType usageType;
             CGPathRef path = NULL;
             IJSVGShapeLayer* strokeLayer = (IJSVGStrokeLayer*)[layer strokeLayer:&usageType];
-            NSXMLElement* strokedPath = [[NSXMLElement alloc] initWithName:@"path"];
+            CXMLElement* strokedPath = [[CXMLElement alloc] initWithName:@"path"];
             
             switch(usageType) {
                 case IJSVGLayerUsageTypeStrokeGradient: {
@@ -1861,7 +1861,7 @@ NSString* IJSVGHash(NSString* key)
                 }
                 case IJSVGLayerUsageTypeStrokeGeneric: {
                     path = [IJSVGLayerTree newPathFromStrokedShapeLayer:strokeLayer];
-                    NSColor* strokeColor = [NSColor colorWithCGColor:strokeLayer.strokeColor];
+                    XColor* strokeColor = [XColor colorWithCGColor:strokeLayer.strokeColor];
                     NSString* strokeColorString = [self colorStringForColor:strokeColor
                                                                        flag:IJSVGColorUsageTraitStroke
                                                                     options:[self colorOptions]];
@@ -1924,7 +1924,7 @@ NSString* IJSVGHash(NSString* key)
                     break;
                 }
                 case IJSVGLayerUsageTypeStrokeGeneric: {
-                    NSColor* strokeColor = [NSColor colorWithCGColor:strokeLayer.strokeColor];
+                    XColor* strokeColor = [XColor colorWithCGColor:strokeLayer.strokeColor];
                     NSString* strokeColorString = [self colorStringForColor:strokeColor
                                                                        flag:IJSVGColorUsageTraitStroke
                                                                     options:[self colorOptions]];
@@ -2013,7 +2013,7 @@ NSString* IJSVGHash(NSString* key)
     return e;
 }
 
-- (void)applyDefaultsToElement:(NSXMLElement*)element
+- (void)applyDefaultsToElement:(CXMLElement*)element
                      fromLayer:(CALayer<IJSVGDrawableLayer>*)layer
 {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
@@ -2067,11 +2067,11 @@ NSString* IJSVGHash(NSString* key)
     }
 }
 
-- (void)applyClipToElement:(NSXMLElement*)element
+- (void)applyClipToElement:(CXMLElement*)element
                  fromLayer:(CALayer<IJSVGDrawableLayer>*)layer
 {
     // create the element
-    NSXMLElement* clip = [[NSXMLElement alloc] init];
+    CXMLElement* clip = [[CXMLElement alloc] init];
     clip.name = @"clipPath";
     
     // create the key
@@ -2092,7 +2092,7 @@ NSString* IJSVGHash(NSString* key)
     
     // create the path
     NSMutableDictionary* pathAtts = [[NSMutableDictionary alloc] init];
-    NSXMLElement* path = [[NSXMLElement alloc] init];
+    CXMLElement* path = [[CXMLElement alloc] init];
     path.name = @"path";
     pathAtts[IJSVGAttributeD] = [self pathFromCGPath:clipPath];
     
@@ -2114,11 +2114,11 @@ NSString* IJSVGHash(NSString* key)
     [[self defElement] addChild:clip];
 }
 
-- (void)applyMaskToElement:(NSXMLElement*)element
+- (void)applyMaskToElement:(CXMLElement*)element
                  fromLayer:(CALayer<IJSVGDrawableLayer>*)layer
 {
     // create the element
-    NSXMLElement* mask = [[NSXMLElement alloc] init];
+    CXMLElement* mask = [[CXMLElement alloc] init];
     mask.name = @"mask";
 
     // create the key
@@ -2152,7 +2152,7 @@ NSString* IJSVGHash(NSString* key)
     [[self defElement] addChild:mask];
 }
 
-- (NSXMLDocument*)_dom
+- (CXMLDocument*)_dom
 {
     if(_dom == nil) {
         @autoreleasepool {
@@ -2164,11 +2164,11 @@ NSString* IJSVGHash(NSString* key)
 
 - (NSString*)SVGString
 {
-    NSXMLNodeOptions options = NSXMLNodePrettyPrint;
+    CXMLNodeOptions options = CXMLNodePrettyPrint;
     if(IJSVGExporterHasOption(_options, IJSVGExporterOptionCompressOutput) == YES) {
-        options = NSXMLNodeOptionsNone;
+        options = CXMLNodeOptionsNone;
     }
-    options |= NSXMLNodeCompactEmptyElement;
+    options |= CXMLNodeCompactEmptyElement;
     NSString* output = [[self _dom] XMLStringWithOptions:options];
     if(IJSVGExporterHasOption(_options, IJSVGExporterOptionRemoveXMLDeclaration) == YES) {
         return [output substringFromIndex:38];
@@ -2260,7 +2260,7 @@ void IJSVGEnumerateCGPathElements(CGPathRef path, IJSVGPathElementEnumerationBlo
     }
 };
 
-- (void)sortAttributesOnElement:(NSXMLElement*)element
+- (void)sortAttributesOnElement:(CXMLElement*)element
 {
     const NSArray* order = @[ IJSVGAttributeID, IJSVGAttributeWidth,
                               IJSVGAttributeHeight, IJSVGAttributeX,
@@ -2272,14 +2272,14 @@ void IJSVGEnumerateCGPathElements(CGPathRef path, IJSVGPathElementEnumerationBlo
                               IJSVGAttributeGradientTransform, IJSVGAttributeXLink ];
 
     // grab the attributes
-    NSArray<NSXMLNode*>* attributes = element.attributes;
+    NSArray<CXMLNode*>* attributes = element.attributes;
     NSInteger count = attributes.count;
 
     // sort the attributes using a custom sort
     NSArray* sorted = [attributes sortedArrayUsingComparator:^NSComparisonResult(id _Nonnull obj1, id _Nonnull obj2) {
         // tell compiler we are nodes
-        NSXMLNode* attribute1 = (NSXMLNode*)obj1;
-        NSXMLNode* attribute2 = (NSXMLNode*)obj2;
+        CXMLNode* attribute1 = (CXMLNode*)obj1;
+        CXMLNode* attribute2 = (CXMLNode*)obj2;
 
         // base index
         float aIndex = count;
@@ -2311,19 +2311,19 @@ void IJSVGEnumerateCGPathElements(CGPathRef path, IJSVGPathElementEnumerationBlo
     }];
 
     // remove all attributes
-    for (NSXMLNode* node in attributes) {
+    for (CXMLNode* node in attributes) {
         [element removeAttributeForName:node.name];
     }
 
     // add them back on in order
-    for (NSXMLNode* attribute in sorted) {
+    for (CXMLNode* attribute in sorted) {
         [element addAttribute:attribute];
     }
 }
 
 #pragma mark Delegate calling methods
 
-- (NSString*)identifierForElement:(NSXMLElement* _Nullable)element
+- (NSString*)identifierForElement:(CXMLElement* _Nullable)element
 {
     NSString* identifier = nil;
     if(_respondsTo.identifierForElement == 1) {
@@ -2344,7 +2344,7 @@ void IJSVGEnumerateCGPathElements(CGPathRef path, IJSVGPathElementEnumerationBlo
     return [self generateID];
 }
 
-- (NSString*)colorStringForColor:(NSColor*)color
+- (NSString*)colorStringForColor:(XColor*)color
                             flag:(IJSVGColorUsageTraits)flag
                          options:(IJSVGColorStringOptions)options
 {

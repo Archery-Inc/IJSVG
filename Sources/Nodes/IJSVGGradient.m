@@ -68,7 +68,7 @@
     
     NSInteger i = 0;
     for(IJSVGNode* stopNode in stops) {
-        NSColor* color = ((IJSVGColorNode*)(stopNode.fill)).color;
+        XColor* color = ((IJSVGColorNode*)(stopNode.fill)).color;
         CGFloat opacity = stopNode.fillOpacity.value;
         CGFloat offset = stopNode.offset.value;
         stopsParams[i++] = offset;
@@ -96,7 +96,7 @@
     NSInteger num = self.numberOfStops;
     CFMutableArrayRef colors = CFArrayCreateMutable(kCFAllocatorDefault, (CFIndex)num,
         &kCFTypeArrayCallBacks);
-    for (NSColor* color in _colors) {
+    for (XColor* color in _colors) {
         CFArrayAppendValue(colors, color.CGColor);
     }
     CGGradientRef result = CGGradientCreateWithColors(IJSVGColor.defaultColorSpace.CGColorSpace,
@@ -106,7 +106,7 @@
 }
 
 - (void)drawInContextRef:(CGContextRef)ctx
-                  bounds:(NSRect)objectRect
+                  bounds:(XRect)objectRect
                transform:(CGAffineTransform)absoluteTransform
 {
 }

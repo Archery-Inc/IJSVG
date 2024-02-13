@@ -7,7 +7,7 @@
 //
 
 #ifndef IJSVGUmbrella_h
-#define IJSVGUmbrella_h
+# define IJSVGUmbrella_h
 
 #import "IJSVG.h"
 #import "IJSVGCommandClose.h"
@@ -32,6 +32,7 @@
 #import "IJSVGStrokeLayer.h"
 #import "IJSVGThreadManager.h"
 #import "IJSVGView.h"
-#import "NSImage+IJSVGAdditions.h"
+#import "IJSVGXEntities.h"
+#import "XImage+IJSVGAdditions.h"
 
 #endif /* IJSVGUmbrella_h */

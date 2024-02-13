@@ -9,6 +9,7 @@
 #import "IJSVGCommand.h"
 #import "IJSVGGradientUnitLength.h"
 #import "IJSVGStringAdditions.h"
+#import "IJSVGXEntities.h"
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 
@@ -66,8 +67,8 @@ BOOL IJSVGIsSVGLayer(CALayer* layer);
 + (void)logParameters:(CGFloat*)param
                 count:(NSInteger)count;
 + (CGFloat)floatValue:(NSString*)string;
-+ (CGFloat)angleBetweenPointA:(NSPoint)point
-                       pointb:(NSPoint)point;
++ (CGFloat)angleBetweenPointA:(XPoint)point
+                       pointb:(XPoint)point;
 + (NSString* _Nullable)defURL:(NSString*)string;
 + (CGFloat)floatValue:(NSString*)string
     fallBackForPercent:(CGFloat)viewBox;
@@ -92,8 +93,8 @@ BOOL IJSVGIsSVGLayer(CALayer* layer);
 + (CGLineCap)CGLineCapForCALineCap:(CAShapeLayerLineCap)lineCap;
 + (CGLineJoin)CGLineJoinForCALineJoin:(CAShapeLayerLineCap)lineJoin;
 
-+ (NSImage*)resizeImage:(NSImage*)anImage
-                 toSize:(CGSize)size;
++ (XImage*)resizeImage:(XImage*)anImage
+                toSize:(CGSize)size;
 
 @end
 NS_ASSUME_NONNULL_END

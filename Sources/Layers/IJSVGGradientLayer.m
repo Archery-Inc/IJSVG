@@ -22,7 +22,7 @@
 
     // lets check its alpha properties on the colors
     BOOL hasAlphaChannel = NO;
-    for (NSColor* color in newGradient.colors) {
+    for (XColor* color in newGradient.colors) {
         if(color.alphaComponent != 1.f) {
             hasAlphaChannel = YES;
             break;
@@ -95,7 +95,7 @@
 - (IJSVGTraitedColorStorage*)colors
 {
     IJSVGTraitedColorStorage* list = [[IJSVGTraitedColorStorage alloc] init];
-    for(NSColor* color in self.gradient.colors) {
+    for(XColor* color in self.gradient.colors) {
         IJSVGTraitedColor* traited = nil;
         traited = [IJSVGTraitedColor colorWithColor:color
                                              traits:IJSVGColorUsageTraitNone];

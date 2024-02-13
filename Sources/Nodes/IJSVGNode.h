@@ -10,7 +10,7 @@
 #import "IJSVGUnitLength.h"
 #import "IJSVGViewBox.h"
 #import "IJSVGBitFlags64.h"
-#import <AppKit/AppKit.h>
+//#import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 
 @class IJSVGNode;
@@ -267,8 +267,8 @@ void IJSVGAssertPaintableObject(id object);
 + (BOOL)node:(IJSVGNode*)node
 containsNodesMatchingTraits:(IJSVGNodeTraits)traits;
 
-+ (IJSVGNodeType)typeForString:(NSString*)string
-                          kind:(NSXMLNodeKind)kind;
+//+ (IJSVGNodeType)typeForString:(NSString*)string
+//                          kind:(CXMLNodeKind)kind;
 + (BOOL)typeIsPathable:(IJSVGNodeType)type;
 
 - (void)setDefaults;

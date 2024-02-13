@@ -53,7 +53,7 @@
 {
 }
 
-+ (NSPoint)readCoordinatePair:(CGFloat*)pairs
++ (XPoint)readCoordinatePair:(CGFloat*)pairs
                         index:(NSInteger)index
 {
     return NSMakePoint(pairs[index * 2], pairs[index * 2 + 1]);
@@ -314,7 +314,7 @@
     return f;
 }
 
-- (NSPoint)readPoint
+- (XPoint)readPoint
 {
     CGFloat x = _parameters[_currentIndex];
     CGFloat y = _parameters[_currentIndex + 1];

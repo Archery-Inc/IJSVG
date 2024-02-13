@@ -10,10 +10,11 @@
 #import "IJSVGTraitedColorStorage.h"
 #import "IJSVGTransform.h"
 #import "IJSVGGroup.h"
+#import "IJSVGXEntities.h"
 
 @interface IJSVGGradient : IJSVGGroup
 
-@property (nonatomic, strong) NSArray<NSColor*>* colors;
+@property (nonatomic, strong) NSArray<XColor*>* colors;
 @property (nonatomic, assign) CGFloat* locations;
 @property (nonatomic, assign) NSUInteger numberOfStops;
 @property (nonatomic, assign) CGGradientRef CGGradient;
@@ -27,7 +28,7 @@
 
 - (CGGradientRef)CGGradient;
 - (void)drawInContextRef:(CGContextRef)ctx
-                  bounds:(NSRect)objectRect
+                  bounds:(XRect)objectRect
                transform:(CGAffineTransform)absoluteTransform;
 
 @end

@@ -36,6 +36,6 @@ typedef NS_ENUM(NSInteger, IJSVGPrimitivePathType) {
                                 toPath:(CGMutablePathRef)mutPath;
 
 - (void)close;
-- (NSPoint)currentPoint;
+- (XPoint)currentPoint;
 
 @end

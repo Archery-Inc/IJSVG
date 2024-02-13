@@ -6,6 +6,7 @@
 //  Copyright © 2020 Curtis Hard. All rights reserved.
 //
 
+#if __has_include(<Cocoa/Cocoa.h>)
 #import "IJSVGImageRep.h"
 #import "NSImage+IJSVGAdditions.h"
 
@@ -51,3 +52,4 @@ IJSVG* IJSVGGetFromNSImage(NSImage* image)
 }
 
 @end
+#endif

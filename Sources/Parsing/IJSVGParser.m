@@ -122,10 +122,10 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
 {
     if((self = [super init]) != nil) {
 
-        // use NSXMLDocument as its the easiest thing to do on OSX
+        // use CXMLDocument as its the easiest thing to do on OSX
         NSError* anError = nil;
         @try {
-            _document = [[NSXMLDocument alloc] initWithXMLString:string
+            _document = [[CXMLDocument alloc] initWithXMLString:string
                                                          options:0
                                                            error:&anError];
         }
@@ -159,7 +159,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
 {
     @try {
         NSError* error;
-        NSXMLDocument* doc = [[NSXMLDocument alloc] initWithData:data
+        CXMLDocument* doc = [[CXMLDocument alloc] initWithData:data
                                                         options:0
                                                            error:&error];
         return doc != nil && error == nil;
@@ -232,10 +232,10 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     _detachedReferences = nil;
 }
 
-- (void)computeDefsForElement:(NSXMLElement*)element
+- (void)computeDefsForElement:(CXMLElement*)element
                    parentNode:(IJSVGNode*)parentNode
 {
-    for(NSXMLElement* childElement in element.children) {
+    for(CXMLElement* childElement in element.children) {
         IJSVGNodeType type = [IJSVGNode typeForString:childElement.localName
                                                  kind:childElement.kind];
         if(type != IJSVGNodeTypeDef) {
@@ -286,7 +286,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
                                                height:hl];
 }
 
-- (IJSVGNodeParserPostProcessBlock)computeAttributesFromElement:(NSXMLElement*)element
+- (IJSVGNodeParserPostProcessBlock)computeAttributesFromElement:(CXMLElement*)element
                                                          onNode:(IJSVGNode*)node
                                               ignoredAttributes:(IJSVGBitFlags*)ignoringAttributes
 {
@@ -297,7 +297,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     // precache the attributes, this is quicker than asking for it each time
     NSMutableDictionary<NSString*, NSString*>* attributes = nil;
     attributes = [[NSMutableDictionary alloc] initWithCapacity:element.attributes.count];
-    for(NSXMLNode* attributeNode in element.attributes) {
+    for(CXMLNode* attributeNode in element.attributes) {
         attributes[attributeNode.name] = attributeNode.stringValue;
     }
     
@@ -580,7 +580,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
                 node.stroke = object;
                 return;
             }
-            NSColor* color = [IJSVGColor colorFromString:value];
+            XColor* color = [IJSVGColor colorFromString:value];
             IJSVGColorNode* colorNode = (IJSVGColorNode*)[IJSVGColorNode colorNodeWithColor:color];
             if(color == nil) {
                 colorNode.isNoneOrTransparent = [IJSVGColor isNoneOrTransparent:value];
@@ -618,7 +618,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
                 node.fill = object;
                 return;
             }
-            NSColor* color = [IJSVGColor colorFromString:value];
+            XColor* color = [IJSVGColor colorFromString:value];
             IJSVGColorNode* colorNode = (IJSVGColorNode*)[IJSVGColorNode colorNodeWithColor:color];
             if(color == nil) {
                 colorNode.isNoneOrTransparent = [IJSVGColor isNoneOrTransparent:value];
@@ -689,7 +689,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     if([allowedAttributes bitIsSet:IJSVGNodeAttributeStopColor] == YES &&
        [ignoringAttributes bitIsSet:IJSVGNodeAttributeStopColor] == NO) {
         IJSVGAttributeParse(IJSVGAttributeStopColor, ^(NSString* value) {
-            NSColor* color = [IJSVGColor colorFromString:value];
+            XColor* color = [IJSVGColor colorFromString:value];
             IJSVGColorNode* colorNode = (IJSVGColorNode*)[IJSVGColorNode colorNodeWithColor:color];
             if(color == nil) {
                 colorNode.isNoneOrTransparent = [IJSVGColor isNoneOrTransparent:value];
@@ -775,11 +775,11 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return postProcessBlock;
 }
 
-- (IJSVGNode*)parseElement:(NSXMLElement*)element
+- (IJSVGNode*)parseElement:(CXMLElement*)element
                 parentNode:(IJSVGNode*)node
 {
     NSString* name = element.localName;
-    NSXMLNodeKind nodeKind = element.kind;
+    CXMLNodeKind nodeKind = element.kind;
     IJSVGNodeType nodeType = [IJSVGNode typeForString:name
                                                  kind:nodeKind];
         
@@ -956,19 +956,19 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return computedNode;
 }
 
-- (void)computeElement:(NSXMLElement*)element
+- (void)computeElement:(CXMLElement*)element
             parentNode:(IJSVGNode*)node
 {
     [self computeDefsForElement:element
                      parentNode:node];
-    for(NSXMLElement* childElement in element.children) {
+    for(CXMLElement* childElement in element.children) {
         [self parseElement:childElement
                 parentNode:node];
     }
 }
 
 #pragma mark Detaching nodes
-- (void)detachElement:(NSXMLElement*)element
+- (void)detachElement:(CXMLElement*)element
        withIdentifier:(NSString*)identifier
 {
     // we can just store the reference for later, we used to copy at this point
@@ -977,7 +977,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     _detachedReferences[identifier] = element;
 }
 
-- (NSXMLElement*)detachedElementWithIdentifier:(NSString*)identifier
+- (CXMLElement*)detachedElementWithIdentifier:(NSString*)identifier
 {
     return _detachedReferences[identifier];
 }
@@ -985,7 +985,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
 - (IJSVGNode*)computeDetachedNodeWithIdentifier:(NSString*)identifier
                                 referencingNode:(IJSVGNode*)node
 {
-    NSXMLElement* detachedElement = [self detachedElementWithIdentifier:identifier];
+    CXMLElement* detachedElement = [self detachedElementWithIdentifier:identifier];
     if(detachedElement == nil) {
         return nil;
     }
@@ -995,11 +995,11 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
                    parentNode:node].detach;
 }
 
-- (NSXMLElement*)mergedElement:(NSXMLElement*)element
-          withReferenceElement:(NSXMLElement*)reference
+- (CXMLElement*)mergedElement:(CXMLElement*)element
+          withReferenceElement:(CXMLElement*)reference
 {
-    NSXMLElement* copy = reference.copy;
-    for (__strong NSXMLNode* attribute in element.attributes) {
+    CXMLElement* copy = reference.copy;
+    for (__strong CXMLNode* attribute in element.attributes) {
         [copy removeAttributeForName:attribute.name];
         attribute = attribute.copy;
         [copy addAttribute:attribute];
@@ -1009,13 +1009,13 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
 
 #pragma mark Node Types
 
-- (void)parseStyleElement:(NSXMLElement*)element
+- (void)parseStyleElement:(CXMLElement*)element
                parentNode:(IJSVGNode*)parentNode
 {
     [_styleSheet parseStyleBlock:element.stringValue];
 }
 
-- (IJSVGNode*)parseFilterElement:(NSXMLElement*)element
+- (IJSVGNode*)parseFilterElement:(CXMLElement*)element
                       parentNode:(IJSVGNode*)parentNode
                 postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1032,7 +1032,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseFilterEffectElement:(NSXMLElement*)element
+- (IJSVGNode*)parseFilterEffectElement:(CXMLElement*)element
                             parentNode:(IJSVGNode*)parentNode
                       postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1055,7 +1055,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseLinearGradientElement:(NSXMLElement*)element
+- (IJSVGNode*)parseLinearGradientElement:(CXMLElement*)element
                               parentNode:(IJSVGNode*)parentNode
                         postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1067,7 +1067,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     
     NSString* xLinkID = [self resolveXLinkAttributeStringForElement:element];
     if(xLinkID != nil) {
-        NSXMLElement* detachedElement = [self detachedElementWithIdentifier:xLinkID];
+        CXMLElement* detachedElement = [self detachedElementWithIdentifier:xLinkID];
         element = [self mergedElement:element
                  withReferenceElement:detachedElement];
     }
@@ -1082,7 +1082,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseRadialGradientElement:(NSXMLElement*)element
+- (IJSVGNode*)parseRadialGradientElement:(CXMLElement*)element
                               parentNode:(IJSVGNode*)parentNode
                         postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1094,7 +1094,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     
     NSString* xLinkID = [self resolveXLinkAttributeStringForElement:element];
     if(xLinkID != nil) {
-        NSXMLElement* detachedElement = [self detachedElementWithIdentifier:xLinkID];
+        CXMLElement* detachedElement = [self detachedElementWithIdentifier:xLinkID];
         element = [self mergedElement:element
                  withReferenceElement:detachedElement];
     }
@@ -1109,7 +1109,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseStopElement:(NSXMLElement*)element
+- (IJSVGNode*)parseStopElement:(CXMLElement*)element
                     parentNode:(IJSVGNode*)parentNode
               postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1127,7 +1127,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parsePathElement:(NSXMLElement*)element
+- (IJSVGNode*)parsePathElement:(CXMLElement*)element
                     parentNode:(IJSVGNode*)parentNode
               postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1159,7 +1159,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseLineElement:(NSXMLElement*)element
+- (IJSVGNode*)parseLineElement:(CXMLElement*)element
                     parentNode:(IJSVGNode*)parentNode
               postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1198,7 +1198,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parsePolyLineElement:(NSXMLElement*)element
+- (IJSVGNode*)parsePolyLineElement:(CXMLElement*)element
                         parentNode:(IJSVGNode*)parentNode
                   postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1224,7 +1224,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parsePolygonElement:(NSXMLElement*)element
+- (IJSVGNode*)parsePolygonElement:(CXMLElement*)element
                        parentNode:(IJSVGNode*)parentNode
                  postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1250,7 +1250,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseEllipseElement:(NSXMLElement*)element
+- (IJSVGNode*)parseEllipseElement:(CXMLElement*)element
                        parentNode:(IJSVGNode*)parentNode
                  postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1302,7 +1302,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseCircleElement:(NSXMLElement*)element
+- (IJSVGNode*)parseCircleElement:(CXMLElement*)element
                       parentNode:(IJSVGNode*)parentNode
                 postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1357,7 +1357,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseGroupElement:(NSXMLElement*)element
+- (IJSVGNode*)parseGroupElement:(CXMLElement*)element
                      parentNode:(IJSVGNode*)parentNode
                        nodeType:(IJSVGNodeType)nodeType
                postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
@@ -1381,7 +1381,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (void)parseSVGElement:(NSXMLElement*)element
+- (void)parseSVGElement:(CXMLElement*)element
                ontoNode:(IJSVGRootNode*)node
              parentNode:(IJSVGNode*)parentNode
        postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
@@ -1418,7 +1418,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
               parentNode:node];
 }
 
-- (IJSVGNode*)parseSVGElement:(NSXMLElement*)element
+- (IJSVGNode*)parseSVGElement:(CXMLElement*)element
                    parentNode:(IJSVGNode*)parentNode
              postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1430,7 +1430,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseRectElement:(NSXMLElement*)element
+- (IJSVGNode*)parseRectElement:(CXMLElement*)element
                     parentNode:(IJSVGNode*)parentNode
               postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1509,7 +1509,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseImageElement:(NSXMLElement*)element
+- (IJSVGNode*)parseImageElement:(CXMLElement*)element
                      parentNode:(IJSVGNode*)parentNode
                postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1530,7 +1530,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
                                          ignoredAttributes:nil];
     
     // load image from base64
-    NSXMLNode* dataNode = [self resolveXLinkAttributeForElement:element];
+    CXMLNode* dataNode = [self resolveXLinkAttributeForElement:element];
     
     if(units == IJSVGUnitObjectBoundingBox) {
         node.width = [IJSVGUnitLength unitWithFloat:node.width.value*bounds.size.width];
@@ -1541,7 +1541,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseUseElement:(NSXMLElement*)element
+- (IJSVGNode*)parseUseElement:(CXMLElement*)element
                    parentNode:(IJSVGNode*)parentNode
              postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1552,7 +1552,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     }
     
     // its important that we remove the xlink attribute or hell breaks loose
-    NSXMLElement* detachedElement = [self detachedElementWithIdentifier:xlinkID];
+    CXMLElement* detachedElement = [self detachedElementWithIdentifier:xlinkID];
 
     IJSVGGroup* node = (IJSVGGroup*)[self parseGroupElement:element
                                                  parentNode:parentNode
@@ -1568,11 +1568,11 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
 }
 
 - (void)replaceAttributes:(NSArray<NSString*>*)attributes
-                onElement:(NSXMLElement*)onElement
-              fromElement:(NSXMLElement*)fromElement
+                onElement:(CXMLElement*)onElement
+              fromElement:(CXMLElement*)fromElement
 {
     for(NSString* collpaseAttribute in attributes) {
-        NSXMLNode* attribute = nil;
+        CXMLNode* attribute = nil;
         if((attribute = [fromElement attributeForName:collpaseAttribute]) != nil &&
            [onElement attributeForName:collpaseAttribute] != nil) {
             [attribute detach];
@@ -1582,7 +1582,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     }
 }
 
-- (IJSVGNode*)parsePatternElement:(NSXMLElement*)element
+- (IJSVGNode*)parsePatternElement:(CXMLElement*)element
                        parentNode:(IJSVGNode*)parentNode
                  postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1595,7 +1595,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     [node addTraits:IJSVGNodeTraitPaintable];
     NSString* xLinkID = [self resolveXLinkAttributeStringForElement:element];
     if(xLinkID != nil) {
-        NSXMLElement* detachedElement = [self detachedElementWithIdentifier:xLinkID];
+        CXMLElement* detachedElement = [self detachedElementWithIdentifier:xLinkID];
         element = [self mergedElement:element
                  withReferenceElement:detachedElement];
     }
@@ -1607,7 +1607,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseClipPathElement:(NSXMLElement*)element
+- (IJSVGNode*)parseClipPathElement:(CXMLElement*)element
                         parentNode:(IJSVGNode*)parentNode
                   postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1626,7 +1626,7 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (IJSVGNode*)parseMaskElement:(NSXMLElement*)element
+- (IJSVGNode*)parseMaskElement:(CXMLElement*)element
                     parentNode:(IJSVGNode*)parentNode
               postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1644,11 +1644,11 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return node;
 }
 
-- (void)parseDefElement:(NSXMLElement*)element
+- (void)parseDefElement:(CXMLElement*)element
              parentNode:(IJSVGNode*)parentNode
               recursive:(BOOL)recursive
 {
-    for(NSXMLElement* childElement in element.children) {
+    for(CXMLElement* childElement in element.children) {
         IJSVGNodeType type = [IJSVGNode typeForString:childElement.localName
                                                  kind:childElement.kind];
         
@@ -1679,14 +1679,14 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     }
 }
 
-- (void)parseTitleElement:(NSXMLElement*)element
+- (void)parseTitleElement:(CXMLElement*)element
                parentNode:(IJSVGNode*)parentNode
          postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
     parentNode.title = element.stringValue;
 }
 
-- (void)parseDescElement:(NSXMLElement*)element
+- (void)parseDescElement:(CXMLElement*)element
               parentNode:(IJSVGNode*)parentNode
         postProcessBlock:(IJSVGNodeParserPostProcessBlock*)postProcessBlock
 {
@@ -1695,10 +1695,10 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
 
 #pragma mark XLink
 
-- (NSXMLNode*)resolveXLinkAttributeForElement:(NSXMLElement*)element
+- (CXMLNode*)resolveXLinkAttributeForElement:(CXMLElement*)element
 {
     NSString* const namespaceURI = @"http://www.w3.org/1999/xlink";
-    NSXMLNode* attributeNode = [element attributeForLocalName:IJSVGAttributeHref
+    CXMLNode* attributeNode = [element attributeForLocalName:IJSVGAttributeHref
                                                           URI:namespaceURI];
     if(attributeNode == nil) {
         attributeNode = [element attributeForName:IJSVGAttributeHref];
@@ -1709,9 +1709,9 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers)
     return attributeNode;
 }
 
-- (NSString*)resolveXLinkAttributeStringForElement:(NSXMLElement*)element
+- (NSString*)resolveXLinkAttributeStringForElement:(CXMLElement*)element
 {
-    NSXMLNode* node = [self resolveXLinkAttributeForElement:element];
+    CXMLNode* node = [self resolveXLinkAttributeForElement:element];
     if(node != nil) {
         return [node.stringValue substringFromIndex:1];
     }

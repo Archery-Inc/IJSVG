@@ -6,13 +6,13 @@
 //  Copyright © 2017 Curtis Hard. All rights reserved.
 //
 
+#import "IJSVGXEntities.h"
 #import "IJSVG.h"
-#import <Cocoa/Cocoa.h>
 
 IB_DESIGNABLE
-@interface IJSVGView : NSView {
+@interface IJSVGView : XView {
     IBInspectable NSString* imageName;
-    IBInspectable NSColor* tintColor;
+    IBInspectable XColor* tintColor;
 
     IJSVG* SVG;
 }

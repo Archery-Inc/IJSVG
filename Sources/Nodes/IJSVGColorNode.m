@@ -10,12 +10,12 @@
 
 @implementation IJSVGColorNode
 
-+ (IJSVGNode*)colorNodeWithColor:(NSColor *)color
++ (IJSVGNode*)colorNodeWithColor:(XColor *)color
 {
     return [[self alloc] initWithColor:color];
 }
 
-- (id)initWithColor:(NSColor*)color {
+- (id)initWithColor:(XColor*)color {
     if((self = [super init]) != nil) {
         [self addTraits:IJSVGNodeTraitPaintable];
         self.color = color;

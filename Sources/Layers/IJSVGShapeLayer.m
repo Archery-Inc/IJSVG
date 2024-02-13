@@ -12,6 +12,8 @@
 #import "IJSVGGradientLayer.h"
 #import "IJSVGTraitedColorStorage.h"
 #import "IJSVGPatternLayer.h"
+#import "IJSVGXEntities.h"
+#import "UIColor+macOS.h"
 
 @implementation IJSVGShapeLayer
 
@@ -257,8 +259,8 @@
         if((fillLayer = (IJSVGShapeLayer*)[self layerForUsageType:IJSVGLayerUsageTypeFillGeneric]) != nil) {
             CGColorRef colorRef = NULL;
             if((colorRef = fillLayer.fillColor) != NULL) {
-                NSColor* nsColor = [NSColor colorWithCGColor:colorRef];
-                IJSVGTraitedColor* color = [IJSVGTraitedColor colorWithColor:nsColor
+                XColor* xColor = [XColor colorWithCGColor:colorRef];
+                IJSVGTraitedColor* color = [IJSVGTraitedColor colorWithColor:xColor
                                                                       traits:IJSVGColorUsageTraitFill];
                 [list addColor:color];
             }
@@ -285,8 +287,8 @@
         if((strokeLayer = (IJSVGStrokeLayer*)[self layerForUsageType:IJSVGLayerUsageTypeStrokeGeneric]) != nil) {
             CGColorRef colorRef = NULL;
             if((colorRef = strokeLayer.strokeColor) != NULL) {
-                NSColor* nsColor = [NSColor colorWithCGColor:colorRef];
-                IJSVGTraitedColor* color = [IJSVGTraitedColor colorWithColor:nsColor
+                XColor* xColor = [XColor colorWithCGColor:colorRef];
+                IJSVGTraitedColor* color = [IJSVGTraitedColor colorWithColor:xColor
                                                                      traits:IJSVGColorUsageTraitStroke];
                 [list addColor:color];
             }

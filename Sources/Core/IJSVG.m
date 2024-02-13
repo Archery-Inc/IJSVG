@@ -108,7 +108,7 @@
     return nil;
 }
 
-- (id)initWithImage:(NSImage*)image
+- (id)initWithImage:(XImage*)image
 {
     IJSVGRootNode* rootNode = [[IJSVGRootNode alloc] init];
     IJSVGImage* imageNode = [[IJSVGImage alloc] init];
@@ -386,14 +386,14 @@
              floatingPointOptions:floatingPointOptions].SVGString;
 }
 
-- (NSImage*)imageWithSize:(CGSize)aSize
+- (XImage*)imageWithSize:(CGSize)aSize
 {
     return [self imageWithSize:aSize
                        flipped:NO
                          error:nil];
 }
 
-- (NSImage*)imageWithSize:(CGSize)aSize
+- (XImage*)imageWithSize:(CGSize)aSize
                     error:(NSError**)error;
 {
     return [self imageWithSize:aSize
@@ -401,7 +401,7 @@
                          error:error];
 }
 
-- (NSImage*)imageWithSize:(CGSize)aSize
+- (XImage*)imageWithSize:(CGSize)aSize
                   flipped:(BOOL)flipped
 {
     return [self imageWithSize:aSize
@@ -451,7 +451,7 @@
     return imageRef;
 }
 
-- (NSImage*)imageWithSize:(CGSize)aSize
+- (XImage*)imageWithSize:(CGSize)aSize
                   flipped:(BOOL)flipped
                     error:(NSError**)error
 {
@@ -459,7 +459,7 @@
                                          flipped:flipped
                                            error:error];
 
-    NSImage* image = [[NSImage alloc] initWithCGImage:ref
+    XImage* image = [[XImage alloc] initWithCGImage:ref
                                                  size:aSize];
     CGImageRelease(ref);
     return image;
@@ -483,7 +483,7 @@
     return ogSize;
 }
 
-- (NSImage*)imageByMaintainingAspectRatioWithSize:(CGSize)aSize
+- (XImage*)imageByMaintainingAspectRatioWithSize:(CGSize)aSize
                                           flipped:(BOOL)flipped
                                             error:(NSError**)error
 {

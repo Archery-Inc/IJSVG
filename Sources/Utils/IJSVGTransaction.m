@@ -8,7 +8,6 @@
 
 #import "IJSVGThreadManager.h"
 #import "IJSVGTransaction.h"
-#import <AppKit/AppKit.h>
 
 BOOL IJSVGIsMainThread(void) {
     return IJSVGThreadManager.currentManager.thread.isMainThread;

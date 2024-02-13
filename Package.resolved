@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "TouchXML",
+        "repositoryURL": "https://github.com/Archery-Inc/TouchXML.git",
+        "state": {
+          "branch": null,
+          "revision": "ead9cb52ba7b5c22c74eec6a211c208c81da1c07",
+          "version": "0.3.0-alpha.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

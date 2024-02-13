@@ -18,11 +18,19 @@
 #import "IJSVGRendering.h"
 #import "IJSVGStyle.h"
 #import "IJSVGTransaction.h"
+#import "IJSVGXEntities.h"
+#if __has_include(<AppKit/AppKit.h>)
+#import <AppKit/AppKit.h>
+#endif
 #import <Foundation/Foundation.h>
 
 @class IJSVG;
 
-@interface IJSVG : NSObject <NSPasteboardWriting> {
+@interface IJSVG : NSObject
+#if __has_include(<AppKit/AppKit.h>)
+<NSPasteboardWriting>
+#endif
+{
 
 @private
     IJSVGRootNode* _rootNode;
@@ -64,7 +72,7 @@
 // bitmask of which dimentions were implicitly set on the SVG
 @property (nonatomic, readonly) IJSVGIntrinsicDimensions intrinsicDimensions;
 
-- (void)prepForDrawingInView:(NSView*)view;
+- (void)prepForDrawingInView:(XView*)view;
 - (IJSVGRootNode*)rootNode;
 - (CGRect)viewBox;
 - (CGSize)sizeWithDefaultSize:(CGSize)size;
@@ -90,7 +98,7 @@
                    flipped:(BOOL)flipped;
 
 
-- (id)initWithImage:(NSImage*)image;
+- (id)initWithImage:(XImage*)image;
 - (id)initWithRootNode:(IJSVGRootNode*)rootNode;
 
 - (id)initWithSVGLayer:(IJSVGGroupLayer*)group
@@ -117,15 +125,15 @@
                       bundle:(NSBundle*)bundle
                        error:(NSError**)error;
 
-- (NSImage*)imageWithSize:(CGSize)aSize;
-- (NSImage*)imageWithSize:(CGSize)aSize
+- (XImage*)imageWithSize:(CGSize)aSize;
+- (XImage*)imageWithSize:(CGSize)aSize
                     error:(NSError**)error;
-- (NSImage*)imageWithSize:(CGSize)aSize
+- (XImage*)imageWithSize:(CGSize)aSize
                   flipped:(BOOL)flipped;
-- (NSImage*)imageWithSize:(CGSize)aSize
+- (XImage*)imageWithSize:(CGSize)aSize
                   flipped:(BOOL)flipped
                     error:(NSError**)error;
-- (NSImage*)imageByMaintainingAspectRatioWithSize:(CGSize)aSize
+- (XImage*)imageByMaintainingAspectRatioWithSize:(CGSize)aSize
                                           flipped:(BOOL)flipped
                                             error:(NSError**)error;
 - (CGImageRef)newCGImageRefWithSize:(CGSize)size

@@ -25,10 +25,10 @@
 }
 
 + (IJSVGNodeType)typeForString:(NSString*)string
-                          kind:(NSXMLNodeKind)kind
+                          kind:(CXMLNodeKind)kind
 {
     // if string is nil, or its not a generic element or some text span
-    if(string == nil || (kind != NSXMLElementKind && kind != NSXMLTextKind)) {
+    if(string == nil || (kind != CXMLElementKind && kind != CXMLTextKind)) {
         return IJSVGNodeTypeNotFound;
     }
     
@@ -106,7 +106,7 @@
     if(IJSVGCharBufferCaseInsensitiveCompare(nodeType, "text") == YES) {
         return IJSVGNodeTypeText;
     }
-    if(IJSVGCharBufferCaseInsensitiveCompare(nodeType, "tspan") == YES || kind == NSXMLTextKind) {
+    if(IJSVGCharBufferCaseInsensitiveCompare(nodeType, "tspan") == YES || kind == CXMLTextKind) {
         return IJSVGNodeTypeTextSpan;
     }
     if(IJSVGCharBufferCaseInsensitiveCompare(nodeType, "title") == YES) {

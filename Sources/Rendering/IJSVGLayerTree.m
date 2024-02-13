@@ -42,14 +42,14 @@
 
 - (void)pushViewPort:(CGRect)viewPort
 {
-    NSValue* value = [NSValue valueWithRect:NSRectFromCGRect(viewPort)];
+    NSValue* value = [NSValue valueWithRect:XRectFromCGRect(viewPort)];
     [_viewPortStack addObject:value];
 }
 
 - (CGRect)viewPort
 {
     NSValue* value = _viewPortStack.lastObject;
-    return (CGRect)NSRectToCGRect(value.rectValue);
+    return (CGRect)XRectToCGRect(value.rectValue);
 }
 
 - (void)popViewPort
@@ -153,7 +153,7 @@
     return newPath;
 }
 
-- (NSColor*)colorForColor:(NSColor*)color
+- (XColor*)colorForColor:(XColor*)color
            matchingTraits:(IJSVGColorUsageTraits)traits
 {
     return [_style.colors colorForColor:color
@@ -197,7 +197,7 @@
         case IJSVGLayerFillTypeColor: {
             fillUsageType = IJSVGLayerUsageTypeFillGeneric;
             IJSVGColorNode* colorNode = (IJSVGColorNode*)fill;
-            NSColor* color = colorNode.color ?: NSColor.blackColor;
+            XColor* color = colorNode.color ?: XColor.blackColor;
             
             // could be an overall replaced fillColor from the style
             if(_style.fillColor != nil) {
@@ -208,7 +208,7 @@
                 color = nil;
             } else {
                 // compute any color that may have been changed via the styles
-                NSColor* repColor = [self colorForColor:color
+                XColor* repColor = [self colorForColor:color
                                          matchingTraits:IJSVGColorUsageTraitFill];
                 color = repColor ?: color;
             }
@@ -330,7 +330,7 @@
     CGRect frame = layer.frame;
     
     // compute the color
-    NSColor* strokeColor = NSColor.blackColor;
+    XColor* strokeColor = XColor.blackColor;
     if([node.stroke isKindOfClass:IJSVGColorNode.class]) {
         IJSVGColorNode* colorNode = (IJSVGColorNode*)node.stroke;
         strokeColor = colorNode.color;
@@ -338,7 +338,7 @@
     
     
     // replacement colour
-    NSColor* repColor = [self colorForColor:strokeColor
+    XColor* repColor = [self colorForColor:strokeColor
                              matchingTraits:IJSVGColorUsageTraitStroke];
     strokeColor = repColor ?: strokeColor;
     
@@ -485,10 +485,10 @@
         gradient = gradient.copy;
         NSMutableArray* colors = nil;
         colors = [[NSMutableArray alloc] initWithCapacity:gradient.numberOfStops];
-        for(NSColor* color in gradient.colors) {
-            NSColor* repColor = [self colorForColor:color
+        for(XColor* color in gradient.colors) {
+            XColor* repColor = [self colorForColor:color
                                      matchingTraits:traits];
-            NSColor* compColor = repColor ?: color;
+            XColor* compColor = repColor ?: color;
             [colors addObject:compColor];
         }
         gradient.colors = colors;

@@ -8,7 +8,7 @@
 
 #import "IJSVGTraitedColorStorage.h"
 #import "IJSVGNode.h"
-#import <AppKit/AppKit.h>
+#import "IJSVGXEntities.h"
 #import <Foundation/Foundation.h>
 #import <objc/runtime.h>
 
@@ -19,7 +19,7 @@
 @property (nonatomic, assign) CGFloat lineWidth;
 @property (nonatomic, assign) CGFloat miterLimit;
 @property (nonatomic, strong) IJSVGTraitedColorStorage* colors;
-@property (nonatomic, strong) NSColor* fillColor;
-@property (nonatomic, strong) NSColor* strokeColor;
+@property (nonatomic, strong) XColor* fillColor;
+@property (nonatomic, strong) XColor* strokeColor;
 
 @end

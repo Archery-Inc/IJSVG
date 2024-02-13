@@ -36,7 +36,7 @@
     return grad;
 }
 
-+ (void)parseGradient:(NSXMLElement*)element
++ (void)parseGradient:(CXMLElement*)element
              gradient:(IJSVGRadialGradient*)gradient
 {
     // cx defaults to 50% if not specified
@@ -94,7 +94,7 @@
 }
 
 - (void)drawInContextRef:(CGContextRef)ctx
-                  bounds:(NSRect)objectRect
+                  bounds:(XRect)objectRect
                transform:(CGAffineTransform)absoluteTransform
 {
     CGContextSaveGState(ctx);

@@ -6,6 +6,8 @@
 //  Copyright © 2020 Curtis Hard. All rights reserved.
 //
 
+@import CoreGraphics;
+
 #import "IJSVGUnitSize.h"
 
 @implementation IJSVGUnitSize

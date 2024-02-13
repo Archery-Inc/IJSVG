@@ -8,11 +8,12 @@
 
 #import "IJSVGColor.h"
 #import "IJSVGTraitedColor.h"
+#import "IJSVGXEntities.h"
 #import <Foundation/Foundation.h>
 
 @interface IJSVGReplacementColor : IJSVGTraitedColor
 
-@property (nonatomic, strong) NSColor* replacementColor;
+@property (nonatomic, strong) XColor* replacementColor;
 
 @end
 
@@ -31,12 +32,12 @@
 
 - (void)addTraits:(IJSVGColorUsageTraits)traits;
 - (void)addColor:(IJSVGTraitedColor*)color;
-- (void)replaceColor:(NSColor*)replaceColor
-           withColor:(NSColor*)withColor
+- (void)replaceColor:(XColor*)replaceColor
+           withColor:(XColor*)withColor
               traits:(IJSVGColorUsageTraits)traits;
 - (void)unionColorStorage:(IJSVGTraitedColorStorage*)colorList;
-- (NSColor*)colorForColor:(NSColor*)color
-           matchingTraits:(IJSVGColorUsageTraits)traits;
+- (XColor*)colorForColor:(XColor*)color
+          matchingTraits:(IJSVGColorUsageTraits)traits;
 - (BOOL)matchesReplacementTraits:(IJSVGColorUsageTraits)traits;
 - (BOOL)matchesTraits:(IJSVGColorUsageTraits)traits;
 

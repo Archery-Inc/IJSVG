@@ -27,7 +27,6 @@
 #import "IJSVGUtils.h"
 #import "IJSVGFilter.h"
 #import "IJSVGFilterEffect.h"
-#import <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
 
 typedef void (^IJSVGNodeParserPostProcessBlock)(void);
@@ -122,10 +121,10 @@ void IJSVGParserMallocBuffersFree(IJSVGParserMallocBuffers* buffers);
 @interface IJSVGParser : NSObject {
 
 @private
-    NSXMLDocument* _document;
+    CXMLDocument* _document;
     IJSVGPathDataStream* _commandDataStream;
     IJSVGStyleSheet* _styleSheet;
-    NSMutableDictionary<NSString*, NSXMLElement*>* _detachedReferences;
+    NSMutableDictionary<NSString*, CXMLElement*>* _detachedReferences;
     IJSVGThreadManager* _threadManager;
 }
 

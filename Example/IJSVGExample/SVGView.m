@@ -10,7 +10,7 @@
 
 @implementation SVGView
 
-- (id)initWithFrame:(NSRect)frameRect
+- (id)initWithFrame:(XRect)frameRect
 {
     if( ( self = [super initWithFrame:frameRect] ) != nil ) {
         svg = [self svg];
@@ -28,7 +28,7 @@
     return [IJSVG SVGNamed:@"Toucan in the Shade"];
 }
 
-- (void)drawRect:(NSRect)dirtyRect
+- (void)drawRect:(XRect)dirtyRect
 {
     CGContextRef ref = [[NSGraphicsContext currentContext] CGContext];
     CGContextSaveGState(ref);

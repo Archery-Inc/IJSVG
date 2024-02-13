@@ -60,11 +60,11 @@
     }
 
     // set the image against the container
-    NSImage* anImage = [[NSImage alloc] initWithData:data];
+    XImage* anImage = [[XImage alloc] initWithData:data];
     [self setImage:anImage];
 }
 
-- (void)setImage:(NSImage*)anImage
+- (void)setImage:(XImage*)anImage
 {
     _image = anImage;
     _intrinsicSize = (CGSize)_image.size;

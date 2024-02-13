@@ -6,12 +6,14 @@
 //  Copyright (c) 2014 Curtis Hard. All rights reserved.
 //
 
+@import TouchXML;
+
 #import "IJSVGGradient.h"
 #import <Foundation/Foundation.h>
 
 @interface IJSVGLinearGradient : IJSVGGradient
 
-+ (void)parseGradient:(NSXMLElement*)element
++ (void)parseGradient:(CXMLElement*)element
              gradient:(IJSVGLinearGradient*)aGradient;
 
 @end

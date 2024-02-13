@@ -6,6 +6,8 @@
 //  Copyright © 2017 Curtis Hard. All rights reserved.
 //
 
+@import TouchXML;
+
 #import <Foundation/Foundation.h>
 #import "IJSVGUtils.h"
 #import "IJSVGTraitedColor.h"
@@ -68,11 +70,11 @@ const NSDictionary<NSString*, NSString*>* IJSVGDefaultAttributes(void);
 
 @optional
 - (NSString* _Nullable)svgExporter:(IJSVGExporter*)exporter
-              identifierForElement:(NSXMLElement* _Nullable)element
+              identifierForElement:(CXMLElement* _Nullable)element
                               type:(IJSVGNodeType)type
                          defaultID:(NSString* (^)(void))defaultID;
 - (NSString* _Nullable)svgExporter:(IJSVGExporter*)exporter
-                    stringForColor:(NSColor*)color
+                    stringForColor:(XColor*)color
                              flags:(IJSVGColorUsageTraits)flag
                            options:(IJSVGColorStringOptions)options;
 
@@ -85,8 +87,8 @@ const NSDictionary<NSString*, NSString*>* IJSVGDefaultAttributes(void);
     IJSVG* _svg;
     CGSize _size;
     IJSVGExporterOptions _options;
-    NSXMLDocument* _dom;
-    NSXMLElement* _defElement;
+    CXMLDocument* _dom;
+    CXMLElement* _defElement;
     NSInteger _idCount;
     NSInteger _shortIdCount;
     BOOL _appliedXLink;

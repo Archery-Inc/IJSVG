@@ -8,6 +8,7 @@
 
 #import "IJSVGPath.h"
 #import "IJSVGGroup.h"
+#import "UIColor+macOS.h"
 
 @implementation IJSVGPath
 
@@ -108,7 +109,7 @@
     return CGPathGetPathBoundingBox(_path);
 }
 
-- (NSPoint)currentPoint
+- (XPoint)currentPoint
 {
     return CGPathGetCurrentPoint(_path);
 }

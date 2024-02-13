@@ -6,8 +6,7 @@
 //  Copyright (c) 2014 Curtis Hard. All rights reserved.
 //
 
-#import <AppKit/AppKit.h>
-#import <Foundation/Foundation.h>
+#import "IJSVGXEntities.h"
 
 typedef NS_OPTIONS(NSInteger, IJSVGColorStringOptions) {
     IJSVGColorStringOptionNone = 1 << 0,
@@ -173,28 +172,28 @@ extern NSString* const IJSVGColorCurrentColorName;
 
 CGFloat* IJSVGColorCSSHSLToHSB(CGFloat hue, CGFloat saturation, CGFloat lightness);
 
-+ (NSColor*)computeColorSpace:(NSColor*)color;
-+ (NSColorSpace*)defaultColorSpace;
++ (XColor*)computeColorSpace:(XColor*)color;
++ (XColorSpaceRef)defaultColorSpace;
 + (BOOL)isColor:(NSString*)string;
-+ (NSString*)colorStringFromColor:(NSColor*)color
++ (NSString*)colorStringFromColor:(XColor*)color
                           options:(IJSVGColorStringOptions)options;
-+ (NSString*)colorStringFromColor:(NSColor*)color;
-+ (NSColor*)colorFromHEXInteger:(NSInteger)hex;
-+ (NSColor*)computeColor:(id)colour;
++ (NSString*)colorStringFromColor:(XColor*)color;
++ (XColor*)colorFromHEXInteger:(NSInteger)hex;
++ (XColor*)computeColor:(id)colour;
 + (BOOL)isNoneOrTransparent:(NSString*)string;
-+ (NSColor*)colorFromString:(NSString*)string;
-+ (NSColor*)colorFromHEXString:(NSString*)string;
-+ (NSColor*)colorFromHEXString:(NSString*)string
-        containsAlphaComponent:(BOOL*)containsAlphaComponent;
++ (XColor*)colorFromString:(NSString*)string;
++ (XColor*)colorFromHEXString:(NSString*)string;
++ (XColor*)colorFromHEXString:(NSString*)string
+       containsAlphaComponent:(BOOL*)containsAlphaComponent;
 + (BOOL)HEXContainsAlphaComponent:(NSUInteger)hex;
 + (unsigned long)lengthOfHEXInteger:(NSUInteger)hex;
-+ (NSColor*)colorFromRString:(NSString*)rString
-                     gString:(NSString*)gString
-                     bString:(NSString*)bString
-                     aString:(NSString*)aString;
-+ (NSColor*)colorFromPredefinedColorName:(NSString*)name;
++ (XColor*)colorFromRString:(NSString*)rString
+                    gString:(NSString*)gString
+                    bString:(NSString*)bString
+                    aString:(NSString*)aString;
++ (XColor*)colorFromPredefinedColorName:(NSString*)name;
 + (NSString*)colorNameFromPredefinedColor:(IJSVGPredefinedColor)color;
-+ (NSColor*)changeAlphaOnColor:(NSColor*)color
-                            to:(CGFloat)alphaValue;
++ (XColor*)changeAlphaOnColor:(XColor*)color
+                           to:(CGFloat)alphaValue;
 
 @end
