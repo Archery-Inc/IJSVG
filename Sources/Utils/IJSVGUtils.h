@@ -95,8 +95,10 @@ BOOL IJSVGIsSVGLayer(CALayer* layer);
 + (CGLineCap)CGLineCapForCALineCap:(CAShapeLayerLineCap)lineCap;
 + (CGLineJoin)CGLineJoinForCALineJoin:(CAShapeLayerLineCap)lineJoin;
 
+#if __has_include(<AppKit/AppKit.h>)
 + (XImage*)resizeImage:(XImage*)anImage
                 toSize:(CGSize)size;
+#endif
 
 @end
 NS_ASSUME_NONNULL_END
