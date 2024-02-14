@@ -321,6 +321,7 @@
 		7B6C45B22B7C22EB004F6D6F /* Common Example Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5926079B287D6B8B00E93B09 /* Toucan in the Shade.svg */,
 				593950A6285215FB00DA9156 /* 5x5checkerboard.svg */,
 				590C87F0201FBF27004A1554 /* AJ_Digital_Camera.svg */,
 				595A69DD2856457E00525065 /* aspect-ratio.svg */,
@@ -366,7 +367,6 @@
 				5901B739282818CA00290525 /* shape.svg */,
 				59069A2A22D0EE0E004DDEA5 /* test (1).svg */,
 				595665DD19B6309C00D805FF /* test.svg */,
-				5926079B287D6B8B00E93B09 /* Toucan in the Shade.svg */,
 				5901B735282818CA00290525 /* transistor.svg */,
 			);
 			path = "Common Example Resources";
