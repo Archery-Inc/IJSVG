@@ -690,8 +690,9 @@ CGFloat IJSVGDegreesToRadians(CGFloat degrees)
     return kCGLineJoinRound;
 }
 
+#if __has_include(<AppKit/AppKit.h>)
 + (XImage*)resizeImage:(XImage*)anImage
-                 toSize:(CGSize)size
+                toSize:(CGSize)size
 {
     XImage* image = [[XImage alloc] initWithSize:size];
     [image lockFocus];
@@ -702,5 +703,6 @@ CGFloat IJSVGDegreesToRadians(CGFloat degrees)
     [image unlockFocus];
     return image;
 }
+#endif
 
 @end
