@@ -6,7 +6,8 @@
 //
 //
 
-#if __has_include(<AppKit/AppKit.h>)
+#import <TargetConditionals.h>
+#if TARGET_OS_OSX
 
 @import AppKit;
 
@@ -37,10 +38,9 @@
 # define CXMLNodePrettyPrint NSXMLNodePrettyPrint
 # define CXMLTextKind NSXMLTextKind
 
-#endif
 
+#else
 
-# if __has_include(<UIKit/UIKit.h>)
 
 @import CoreGraphics;
 @import UIKit;

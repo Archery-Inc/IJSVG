@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Curtis Hard. All rights reserved.
 //
 
+#import <TargetConditionals.h>
+
 #import "IJSVGCommand.h"
 #import "IJSVGGradientUnitLength.h"
 #import "IJSVGStringAdditions.h"
@@ -38,7 +40,7 @@ void IJSVGCharBufferToLower(char* buffer);
 size_t IJSVGCharBufferHash(char* buffer);
 CGPoint IJSVGPathGetLastQuadraticCommandPoint(CGPathRef path);
 
-#if __has_include(<AppKit/AppKit.h>)
+#if TARGET_OS_OSX
 IJSVGFloatingPointOptions IJSVGFloatingPointOptionsDefault(void);
 IJSVGFloatingPointOptions IJSVGFloatingPointOptionsMake(BOOL round, int precision);
 #endif
@@ -95,7 +97,7 @@ BOOL IJSVGIsSVGLayer(CALayer* layer);
 + (CGLineCap)CGLineCapForCALineCap:(CAShapeLayerLineCap)lineCap;
 + (CGLineJoin)CGLineJoinForCALineJoin:(CAShapeLayerLineCap)lineJoin;
 
-#if __has_include(<AppKit/AppKit.h>)
+#if TARGET_OS_OSX
 + (XImage*)resizeImage:(XImage*)anImage
                 toSize:(CGSize)size;
 #endif

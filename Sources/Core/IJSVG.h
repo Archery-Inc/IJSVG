@@ -31,6 +31,8 @@
 //#import "IJSVGXEntities.h"
 //#import "XImage+IJSVGAdditions.h"
 
+#import <TargetConditionals.h>
+
 #import "IJSVGTraitedColorStorage.h"
 #import "IJSVGRootNode.h"
 #import "IJSVGExporter.h"
@@ -52,7 +54,7 @@
 @class IJSVG;
 
 @interface IJSVG : NSObject
-#if __has_include(<AppKit/AppKit.h>)
+#if TARGET_OS_OSX
 <NSPasteboardWriting>
 #endif
 {
@@ -104,7 +106,7 @@
 - (CGSize)sizeByMaintainingAspectRatioWithSize:(CGSize)aSize;
 - (NSString*)identifier;
 - (NSSet<IJSVG*>*)directDescendSVGs;
-#if __has_include(<AppKit/AppKit.h>)
+#if TARGET_OS_OSX
 - (IJSVGExporter*)exporterWithSize:(CGSize)size
                            options:(IJSVGExporterOptions)options
               floatingPointOptions:(IJSVGFloatingPointOptions)floatingPointOptions;

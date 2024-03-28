@@ -6,10 +6,12 @@
 //  Copyright © 2017 Curtis Hard. All rights reserved.
 //
 
-#if __has_include(<AppKit/AppKit.h>)
-#import <Foundation/Foundation.h>
-#import "IJSVGUtils.h"
-#import "IJSVGTraitedColor.h"
+#import <TargetConditionals.h>
+#if TARGET_OS_OSX
+
+# import <Foundation/Foundation.h>
+# import "IJSVGUtils.h"
+# import "IJSVGTraitedColor.h"
 
 @class IJSVG;
 @class IJSVGExporter;

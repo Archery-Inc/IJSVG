@@ -10,9 +10,10 @@
 #import "IJSVGExporter.h"
 #import "IJSVGExporterPathInstruction.h"
 #import "IJSVGUtils.h"
+#import <TargetConditionals.h>
 #import <math.h>
 
-#if __has_include(<AppKit/AppKit.h>)
+#if TARGET_OS_OSX
 @implementation IJSVGExporterPathInstructionCommand
 @end
 
@@ -202,7 +203,7 @@ void IJSVGExporterPathInstructionRoundData(CGFloat* data, NSInteger length,
     }
 }
 
-#if __has_include(<AppKit/AppKit.h>)
+#if TARGET_OS_OSX
 + (void)convertInstructionsToRoundRelativeCoordinates:(NSArray<IJSVGExporterPathInstruction*>*)instructions
                                  floatingPointOptions:(IJSVGFloatingPointOptions)floatingPointOptions
 {

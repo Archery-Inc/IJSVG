@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Curtis Hard. All rights reserved.
 //
 
+#import <TargetConditionals.h>
+
 #import "IJSVG.h"
 #import "IJSVGExporter.h"
 #import "IJSVGTransaction.h"
@@ -343,7 +345,7 @@
     return svgs;
 }
 
-#if __has_include(<AppKit/AppKit.h>)
+#if TARGET_OS_OSX
 - (IJSVGExporter*)exporterWithSize:(CGSize)size
                            options:(IJSVGExporterOptions)options
               floatingPointOptions:(IJSVGFloatingPointOptions)floatingPointOptions
@@ -592,10 +594,9 @@
              error:(NSError**)error
 {
     CGContextRef currentCGContext;
-#if __has_include(<AppKit/AppKit.h>)
+#if TARGET_OS_OSX
     currentCGContext = NSGraphicsContext.currentContext.CGContext;
-#endif
-#if __has_include(<UIKit/UIKit.h>)
+#else
     currentCGContext = UIGraphicsGetCurrentContext();
 #endif
     return [self _drawInRect:rect
@@ -699,7 +700,7 @@
 
 #pragma mark NSPasteboard
 
-#if __has_include(<AppKit/AppKit.h>)
+#if TARGET_OS_OSX
 - (NSArray*)writableTypesForPasteboard:(NSPasteboard*)pasteboard
 {
     return @[ NSPasteboardTypePDF ];

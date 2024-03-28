@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Curtis Hard. All rights reserved.
 //
 
+#import <TargetConditionals.h>
+
 #import "IJSVGLayer.h"
 #import "IJSVGShapeLayer.h"
 #import "IJSVGUtils.h"
@@ -146,6 +148,7 @@ NSString* IJSVGShortenFloatString(NSString* string)
     return string;
 }
 
+#if TARGET_OS_OSX
 IJSVGFloatingPointOptions IJSVGFloatingPointOptionsDefault(void)
 {
     return IJSVGFloatingPointOptionsMake(NO, kIJSVGExporterPathInstructionFloatPrecision);
@@ -158,6 +161,7 @@ IJSVGFloatingPointOptions IJSVGFloatingPointOptionsMake(BOOL round, int precisio
         .precision = precision
     };
 }
+#endif
 
 NSString* IJSVGShortFloatStringWithOptions(CGFloat f, IJSVGFloatingPointOptions options)
 {
@@ -690,7 +694,7 @@ CGFloat IJSVGDegreesToRadians(CGFloat degrees)
     return kCGLineJoinRound;
 }
 
-#if __has_include(<AppKit/AppKit.h>)
+#if TARGET_OS_OSX
 + (XImage*)resizeImage:(XImage*)anImage
                 toSize:(CGSize)size
 {
